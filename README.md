@@ -2,6 +2,19 @@
 
 Backend del sistema de pedidos, compuesto por tres microservicios Java 17 / Spring Boot 3.2 con bases de datos separadas y comunicacion asincrona via RabbitMQ.
 
+---
+
+## 📚 Documentación Principal
+
+| Documento | Descripción | Cuándo usarlo |
+|-----------|-------------|---------------|
+| **[CONTEXTO_PROYECTO.md](CONTEXTO_PROYECTO.md)** | 📋 Documentación completa del proyecto | Onboarding, referencia técnica completa |
+| **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** | 🚀 Guía rápida de comandos esenciales | Día a día, comandos frecuentes |
+| **[docs/Serenity BDD/guia_serenity_bdd.md](docs/Serenity%20BDD/guia_serenity_bdd.md)** | 🧪 Guía completa de automatización QA | Trabajar con pruebas Serenity |
+| **[docs/GUIA_ENDPOINTS_Y_DB.md](docs/GUIA_ENDPOINTS_Y_DB.md)** | 🔌 Referencia API + esquema DB | Integración con APIs, consultas DB |
+
+---
+
 ## Arquitectura
 
 ```mermaid
@@ -434,3 +447,104 @@ mvn -pl order-service spring-boot:run
 - [Auditoria](docs/auditoria/AUDITORIA.md)
 - [Calidad y pruebas](docs/quality/CALIDAD.md)
 - [Deuda tecnica](docs/quality/DEUDA_TECNICA.md)
+
+---
+
+## 🧪 Pruebas Automatizadas con Serenity BDD
+
+El proyecto incluye una suite completa de pruebas end-to-end automatizadas con **Serenity BDD + Cucumber**.
+
+### Ejecutar las pruebas
+
+```bash
+# 1. Asegurar que order-service esté corriendo
+curl http://localhost:8080/menu
+
+# 2. Ir al directorio de Serenity
+cd Serenity/
+
+# 3. Ejecutar todas las pruebas
+gradlew.bat clean test aggregate
+
+# 4. Ver el reporte HTML
+start target\site\serenity\index.html
+```
+
+### Comandos útiles
+
+```bash
+# Solo pruebas de humo (smoke)
+gradlew.bat smoke
+
+# Solo pruebas de regresión
+gradlew.bat regression
+
+# Pruebas por tag específico
+gradlew.bat hdu -Ptag=HDU-01
+
+# Cambiar entorno (staging, ci)
+gradlew.bat test -Denvironment=staging
+```
+
+### Estructura de pruebas
+
+```
+Serenity/
+├── src/test/
+│   ├── java/com/restaurant/qa/
+│   │   ├── runners/TestRunner.java          # Punto de entrada JUnit 5
+│   │   └── stepdefinitions/
+│   │       └── OrderStepDefinitions.java    # Implementación Gherkin
+│   └── resources/
+│       ├── features/                        # Escenarios .feature
+│       └── serenity.conf                    # Configuración
+└── target/site/serenity/
+    └── index.html                           # Reporte generado
+```
+
+### Tags implementados
+
+- `@smoke` — Pruebas críticas para ejecución rápida
+- `@regression` — Suite completa de regresión
+- `@HDU-01` — Creación de recursos con semántica HTTP correcta
+
+**📖 Para más detalles:** Ver [docs/Serenity BDD/guia_serenity_bdd.md](docs/Serenity%20BDD/guia_serenity_bdd.md)
+
+---
+
+## 📋 Documentación Adicional
+
+- **[CONTEXTO_PROYECTO.md](CONTEXTO_PROYECTO.md)** — Documentación completa del proyecto
+- **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** — Comandos esenciales de uso diario
+- **[docs/HANDOVER_REPORT.md](docs/HANDOVER_REPORT.md)** — Reporte de handover del proyecto
+- **[docs/week-3-review/ARCHITECTURE.md](docs/week-3-review/ARCHITECTURE.md)** — Decisiones arquitectónicas
+- **[docs/TEST_PLAN.md](docs/TEST_PLAN.md)** — Plan de pruebas completo
+
+---
+
+## 🤝 Contribuir
+
+Este es un proyecto **brownfield** recibido como handover. Por favor revisa las **[instrucciones de Copilot](.github/copilot-instructions.md)** antes de hacer cambios.
+
+### Reglas críticas
+- ❌ NO romper funcionalidad existente
+- ❌ NO cambiar contratos REST/AMQP sin documentar
+- ❌ NO hacer llamadas REST entre servicios backend
+- ✅ SÍ escribir tests antes de código (TDD)
+- ✅ SÍ refactorizar para mejorar seguridad
+- ✅ SÍ documentar decisiones técnicas
+
+---
+
+## 📞 Soporte
+
+Para preguntas o issues:
+1. Revisa primero [CONTEXTO_PROYECTO.md](CONTEXTO_PROYECTO.md)
+2. Consulta [QUICK_REFERENCE.md](QUICK_REFERENCE.md) para comandos
+3. Busca en la documentación de `docs/`
+4. Abre un issue en GitHub
+
+---
+
+**Última actualización:** 3 de marzo de 2026  
+**Versión:** 2.0 (con QA Automation)
