@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: report-service
+  datasource:
+    url: ${REPORT_DB_URL}
+    username: ${REPORT_DB_USER}
+    password: ${REPORT_DB_PASS}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USER}
+    password: ${RABBITMQ_PASS}
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 1000
+          max-attempts: 3
+          multiplier: 2.0
+          max-interval: 10000
+
+server:
+  port: ${REPORT_SERVICE_PORT}
+
+rabbitmq:
+  exchange:
+    name: ${RABBITMQ_EXCHANGE_NAME}
+  queue:
+    name: ${RABBITMQ_REPORT_QUEUE_NAME}
+    order-ready:
+      name: ${RABBITMQ_REPORT_ORDER_READY_QUEUE_NAME}
+  routing-key:
+    order-placed: ${RABBITMQ_ROUTING_KEY_ORDER_PLACED}
+    order-ready: ${RABBITMQ_ROUTING_KEY_ORDER_READY}
+  dlq:
+    name: ${RABBITMQ_REPORT_DLQ_NAME}
+    exchange: ${RABBITMQ_REPORT_DLX_NAME}
