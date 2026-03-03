@@ -9,13 +9,16 @@
 
 ```
 Serenity/
-├── build.gradle                          ← 🧱 La base de todo
+├── build.gradle                          ← 🧱 La base de todo (Java 24)
 ├── settings.gradle                       ← 🏷️ La tarjeta de identidad
 │
 └── src/test/
     ├── java/com/restaurant/qa/
-    │   └── runners/
-    │       └── TestRunner.java           ← 🚀 El botón de encendido
+    │   ├── runners/
+    │   │   └── TestRunner.java           ← 🚀 El punto de entrada JUnit 5
+    │   └── stepdefinitions/              ← ⚡ El corazón de la ejecución
+    │       ├── OrderStepDefinitions.java ← 🐍 Mapeo Gherkin -> Java
+    │       └── CucumberHooks.java        ← ⚓ Ganchos de configuración
     │
     └── resources/
         ├── serenity.conf                 ← ⚙️ El cerebro de configuración
@@ -50,8 +53,8 @@ Piensa en [build.gradle](file:///c:/Users/usuario/iCloudDrive/SOFKA/Retos%20Marz
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│                    Tu Código de Pruebas              │
-│   (Step Definitions, Tasks, Questions)               │
+│                    Tu Código de Pruebas             │
+│   (Step Definitions, Tasks, Questions)              │
 ├──────────┬──────────┬───────────────────────────────┤
 │ Serenity │ Serenity │ Serenity                      │
 │ Core     │ Cucumber │ REST Assured                  │
@@ -60,7 +63,7 @@ Piensa en [build.gradle](file:///c:/Users/usuario/iCloudDrive/SOFKA/Retos%20Marz
 │ Serenity JUnit5  │  Serenity Screenplay (REST)      │
 │ (lanzador)       │  (patrón actor-tarea-pregunta)   │
 ├──────────────────┴──────────────────────────────────┤
-│ Cucumber Java    │  Cucumber JUnit Platform Engine   │
+│ Cucumber Java    │  Cucumber JUnit Platform Engine  │
 │ (@Given @When)   │  (descubre .feature files)       │
 ├──────────────────┴──────────────────────────────────┤
 │ JUnit 5 API + Engine  │  JUnit Platform Suite       │
@@ -143,7 +146,33 @@ Porque **no es código ejecutable**. Es solo un **contenedor de anotaciones**. J
 
 ---
 
-## 4. [serenity.conf](file:///c:/Users/usuario/iCloudDrive/SOFKA/Retos%20Marzo/Restaurants/Serenity/src/test/resources/serenity.conf) — ⚙️ El Cerebro de Configuración
+## 4. [OrderStepDefinitions.java](file:///c:/Users/usuario/iCloudDrive/SOFKA/Retos%20Marzo/Restaurants/Serenity/src/test/java/com/restaurant/qa/stepdefinitions/OrderStepDefinitions.java) — ⚡ El Corazón de la Ejecución
+
+### ¿Qué hace?
+Es donde el **lenguaje humano (Gherkin)** se traduce en **instrucciones de máquina (Java)**. Cada línea que escribes en un archivo `.feature` tiene un método correspondiente aquí.
+
+### ¿Por qué un Senior QA lo considera crítico?
+- **Implementa la lógica de prueba:** Aquí es donde usas `SerenityRest` para hacer las llamadas a la API y `AssertJ` para validar los resultados.
+- **Reusabilidad:** Un solo "Step Definition" puede ser usado por múltiples escenarios en diferentes archivos feature.
+- **Abstracción:** El resto del equipo no necesita saber *cómo* se crea una orden, solo que el paso `Dado que el payload de la orden es válido` funciona.
+
+### ¿Qué pasa si lo borras?
+Cucumber encontrará los escenarios pero no sabrá qué hacer con ellos. Los reportes mostrarán los pasos como "Undefined" o "Pending".
+
+---
+
+## 5. [CucumberHooks.java](file:///c:/Users/usuario/iCloudDrive/SOFKA/Retos%20Marzo/Restaurants/Serenity/src/test/java/com/restaurant/qa/stepdefinitions/CucumberHooks.java) — ⚓ Ganchos de Configuración
+
+### ¿Qué hace?
+Contiene métodos anotados con `@Before` y `@After` que se ejecutan automáticamente antes y después de cada escenario.
+
+### ¿Por qué existe?
+- **Limpieza (Sandboxing):** Asegura que cada prueba empiece con un estado limpio.
+- **Configuración dinámica:** Puede configurar variables de entorno o limpiar bases de datos antes de que la prueba comience.
+
+---
+
+## 6. [serenity.conf](file:///c:/Users/usuario/iCloudDrive/SOFKA/Retos%20Marzo/Restaurants/Serenity/src/test/resources/serenity.conf) — ⚙️ El Cerebro de Configuración
 
 ### ¿Qué hace?
 Es el **archivo de configuración central** de Serenity BDD. Controla:
@@ -183,7 +212,7 @@ Serenity usa valores por defecto que probablemente no son los correctos para tu 
 
 ---
 
-## 5. [cucumber.properties](file:///c:/Users/usuario/iCloudDrive/SOFKA/Retos%20Marzo/Restaurants/Serenity/src/test/resources/cucumber.properties) — 🔌 El Cable que Conecta Todo
+## 7. [cucumber.properties](file:///c:/Users/usuario/iCloudDrive/SOFKA/Retos%20Marzo/Restaurants/Serenity/src/test/resources/cucumber.properties) — 🔌 El Cable que Conecta Todo
 
 ### ¿Qué hace?
 Es un **archivo de respaldo** que garantiza que la conexión Cucumber ↔ Serenity funcione **siempre**, sin importar cómo ejecutes las pruebas.
@@ -210,7 +239,7 @@ Las pruebas siguen corriendo vía `gradle test` porque [TestRunner.java](file://
 
 ---
 
-## 6. [logback-test.xml](file:///c:/Users/usuario/iCloudDrive/SOFKA/Retos%20Marzo/Restaurants/Serenity/src/test/resources/logback-test.xml) — 📋 El Filtro de Ruido
+## 8. [logback-test.xml](file:///c:/Users/usuario/iCloudDrive/SOFKA/Retos%20Marzo/Restaurants/Serenity/src/test/resources/logback-test.xml) — 📋 El Filtro de Ruido
 
 ### ¿Qué hace?
 Controla **qué mensajes de log aparecen en la consola** durante la ejecución de pruebas.
@@ -250,7 +279,7 @@ Las pruebas siguen funcionando, pero la consola se inunda de logs internos de Se
 
 ---
 
-## 7. [HDU01_create_order.feature](file:///c:/Users/usuario/iCloudDrive/SOFKA/Retos%20Marzo/Restaurants/Serenity/src/test/resources/features/order_service/HDU01_create_order.feature) — 📖 La Historia del Usuario
+## 9. [HDU01_create_order.feature](file:///c:/Users/usuario/iCloudDrive/SOFKA/Retos%20Marzo/Restaurants/Serenity/src/test/resources/features/order_service/HDU01_create_order.feature) — 📖 La Historia del Usuario
 
 ### ¿Qué hace?
 Es un **escenario ejecutable** escrito en Gherkin que describe el comportamiento esperado de la API en lenguaje natural. Es simultáneamente:
@@ -336,6 +365,7 @@ No tienes pruebas para la HDU-01. El reporte de Serenity muestra "0 escenarios" 
 | **build.gradle** | 🔴 Crítico | Nada compila ni ejecuta |
 | **serenity.conf** | 🔴 Crítico | Pruebas no saben a dónde apuntar |
 | **TestRunner.java** | 🔴 Crítico | `gradle test` no encuentra pruebas |
+| **StepDefinitions** | 🔴 Crítico | Escenarios Gherkin no hacen nada |
 | **cucumber.properties** | 🟡 Alto | Ejecución desde IDE pierde reportes |
 | **settings.gradle** | 🟢 Bajo | Solo afecta el nombre del proyecto |
 | **logback-test.xml** | 🟢 Bajo | Solo afecta legibilidad de consola |
@@ -343,4 +373,4 @@ No tienes pruebas para la HDU-01. El reporte de Serenity muestra "0 escenarios" 
 
 ---
 
-> **Consejo de Senior QA:** Estos 7 archivos son el **esqueleto mínimo viable**. Un proyecto maduro tendría además: Step Definitions (el código Java que implementa cada paso Gherkin), Tasks y Questions del Screenplay, modelos de datos, y utilidades. Pero este esqueleto es suficiente para compilar, ejecutar, y generar tu primer reporte de Serenity.
+> **Consejo de Senior QA:** Estos 9 componentes son el **esqueleto funcional** actual. Un proyecto maduro evolucionaría hacia el Patrón Screenplay completo con Tasks y Questions, pero con estos cimientos ya tienes una automatización robusta y profesional.

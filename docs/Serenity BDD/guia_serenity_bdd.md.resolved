@@ -124,11 +124,11 @@ plugins {
 defaultTasks 'clean', 'test', 'aggregate'
 
 // ---------------------------------------------------------------------------
-// Versión de Java — coincide con tus servicios backend (Java 17)
+// Versión de Java — usando Java 24 del sistema
 // ---------------------------------------------------------------------------
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_24
+    targetCompatibility = JavaVersion.VERSION_24
 }
 
 // ---------------------------------------------------------------------------
@@ -139,7 +139,7 @@ ext {
     cucumberVersion       = '7.20.1'
     junitVersion          = '5.11.4'
     restAssuredVersion    = '5.5.0'
-    lombokVersion         = '1.18.30'
+    lombokVersion         = '1.18.36'
     assertjVersion        = '3.27.3'
     logbackVersion        = '1.5.16'
     slf4jVersion          = '2.0.16'
@@ -203,11 +203,11 @@ dependencies {
     // Coincide con lo que tus servicios backend ya utilizan.
     testImplementation "org.assertj:assertj-core:${assertjVersion}"
 
-    // ── Lombok (opcional, para clases de datos más limpias) ────────────────
-    compileOnly     "org.projectlombok:lombok:${lombokVersion}"
-    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
-    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    // ── Lombok (disabled for Java 24 compatibility) ────────────────────────
+    // compileOnly     "org.projectlombok:lombok:${lombokVersion}"
+    // annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    // testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    // testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
     // ── Logging ────────────────────────────────────────────────────────────
     // SLF4J + Logback para logging consistente en la ejecución de pruebas.
@@ -251,8 +251,7 @@ test {
 //
 // También puedes ejecutarlo manualmente: gradle aggregate
 serenity {
-    // El título del reporte mostrado en la parte superior del reporte HTML
-    projectName = "Sistema de Pedidos de Restaurante — Pruebas de API"
+    // The serenity plugin 4.x reads configuration from serenity.conf instead
 }
 
 // ---------------------------------------------------------------------------
@@ -673,59 +672,26 @@ Aquí está el layout de directorios recomendado para tu proyecto de automatizac
 
 ```
 restaurant-qa-automation/
-├── build.gradle                          # ← Configuración de build (Sección 2)
+├── build.gradle                          # ← Configuración de build (Sección 2 - Java 24)
 ├── settings.gradle                       # ← Nombre del proyecto
 ├── gradle.properties                     # ← Propiedades compartidas de Gradle
 │
 ├── src/
-│   ├── main/java/com/restaurant/qa/
-│   │   ├── actors/                       # ← Configuraciones de actores
-│   │   │   └── ApiUser.java              #     Actores: Chef, Cliente, Admin
-│   │   ├── abilities/                    # ← Habilidades personalizadas
-│   │   │   └── AuthenticateAsKitchen.java
-│   │   ├── tasks/                        # ← Tareas del Screenplay
-│   │   │   ├── CreateOrder.java
-│   │   │   ├── UpdateOrderStatus.java
-│   │   │   ├── DeleteOrder.java
-│   │   │   └── GetReport.java
-│   │   ├── questions/                    # ← Preguntas del Screenplay
-│   │   │   ├── TheOrder.java
-│   │   │   ├── TheResponse.java
-│   │   │   └── TheErrorResponse.java
-│   │   ├── models/                       # ← POJOs de Request/Response
-│   │   │   ├── OrderRequest.java
-│   │   │   ├── OrderResponse.java
-│   │   │   └── ErrorResponse.java
-│   │   └── utils/                        # ← Utilidades compartidas
-│   │       ├── Endpoints.java            #     Constantes de rutas
-│   │       └── TestDataBuilder.java      #     Fábrica de datos de prueba
-│   │
 │   └── test/
 │       ├── java/com/restaurant/qa/
-│       │   ├── runners/                  # ← Runners de suite de pruebas
+│       │   ├── runners/                  # ← Runners de suite de pruebas JUnit 5
 │       │   │   └── TestRunner.java
-│       │   └── stepdefinitions/          # ← Definiciones de pasos de Cucumber
+│       │   └── stepdefinitions/          # ← Definiciones de pasos implementadas
 │       │       ├── OrderStepDefinitions.java
-│       │       ├── ReportStepDefinitions.java
-│       │       ├── SecurityStepDefinitions.java
-│       │       └── CommonStepDefinitions.java
+│       │       └── CucumberHooks.java
 │       │
 │       └── resources/
-│           ├── serenity.conf             # ← Configuración de Serenity (Sección 3)
-│           ├── logback-test.xml          # ← Configuración de logging
-│           ├── cucumber.properties       # ← Propiedades de integración Cucumber
-│           └── features/                 # ← Archivos Gherkin .feature
-│               ├── order_service/
-│               │   ├── HDU01_create_order.feature
-│               │   ├── HDU02_list_orders.feature
-│               │   ├── HDU03_type_errors.feature
-│               │   ├── HDU04_soft_delete.feature
-│               │   └── HDU07_state_conflicts.feature
-│               ├── report_service/
-│               │   └── HDU08_business_rules.feature
-│               └── cross_cutting/
-│                   ├── HDU05_error_structure.feature
-│                   └── HDU06_security.feature
+│           ├── serenity.conf             # ← Configuración de entornos y API
+│           ├── logback-test.xml          # ← Configuración de logging (silencia ruido)
+│           ├── cucumber.properties       # ← Respaldo para ejecución desde IDE
+│           └── features/                 # ← Escenarios Gherkin en español
+│               └── order_service/
+│                   └── HDU01_create_order.feature
 ```
 
 ### 4.3 Archivos Clave que Unen Todo
@@ -779,65 +745,36 @@ cucumber.features=src/test/resources/features
 ```java
 package com.restaurant.qa.stepdefinitions;
 
-import io.cucumber.java.en.*;
+import io.cucumber.java.es.*;
+import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
-import net.serenitybdd.annotations.Step;
-import static net.serenitybdd.rest.SerenityRest.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class OrderStepDefinitions {
 
-    private String baseUrl;
+    private static final String BASE_URL = "http://localhost:8080";
+    private Map<String, Object> orderPayload;
+    private Response response;
 
-    @Given("que el catálogo de productos contiene al menos un producto activo con id {int}")
-    public void productoExiste(int productId) {
-        // Verificar que el producto existe vía el endpoint de menú
-        SerenityRest.given()
-            .baseUri(baseUrl)
-            .when()
-            .get("/menu")
-            .then()
-            .statusCode(200);
+    @Dado("que el payload de la orden es válido con tableId {int} y productId {int} con quantity {int}")
+    public void prepararPayload(int tableId, int productId, int quantity) {
+        orderPayload = new HashMap<>();
+        // ... configuración del payload
     }
 
-    @When("se envía una solicitud POST a {string}")
-    public void enviarSolicitudPost(String path) {
-        SerenityRest.given()
-            .baseUri(baseUrl)
-            .contentType("application/json")
-            .body("""
-                {
-                    "tableId": 5,
-                    "items": [{"productId": 1, "quantity": 2}]
-                }
-                """)
-            .when()
-            .post(path);
+    @Cuando("se envía una solicitud POST a {string}")
+    public void seEnviaUnaSolicitudPOSTA(String endpoint) {
+        response = SerenityRest.given()
+                .baseUri(BASE_URL)
+                .contentType("application/json")
+                .body(orderPayload)
+                .when()
+                .post(endpoint);
     }
 
-    @Then("la respuesta debe tener código {int}")
-    public void verificarCodigoDeEstado(int codigoEsperado) {
-        assertThat(lastResponse().statusCode())
-            .as("Código de estado HTTP")
-            .isEqualTo(codigoEsperado);
-    }
-
-    @Then("debe incluir el header {string} con el patrón {string}")
-    public void verificarPatronDeHeader(String header, String patron) {
-        String valorHeader = lastResponse().header(header);
-        assertThat(valorHeader)
-            .as("Valor del header '%s'", header)
-            .isNotNull()
-            .matches(patron.replace("{uuid}", "[0-9a-f\\-]{36}"));
-    }
-
-    @Then("el cuerpo debe seguir la estructura ErrorResponse")
-    public void verificarEstructuraErrorResponse() {
-        var body = lastResponse().body();
-        assertThat(body.jsonPath().getString("timestamp")).isNotNull();
-        assertThat(body.jsonPath().getInt("status")).isPositive();
-        assertThat(body.jsonPath().getString("error")).isNotBlank();
-        assertThat(body.jsonPath().getString("message")).isNotBlank();
+    @Entonces("la respuesta debe tener código {int}")
+    public void laRespuestaDebeTenerCodigo(int expectedStatusCode) {
+        assertThat(response.statusCode()).isEqualTo(expectedStatusCode);
     }
 }
 ```
