@@ -1,0 +1,48 @@
+﻿spring:
+  application:
+    name: kitchen-worker
+  datasource:
+    url: ${KITCHEN_DB_URL}
+    username: ${KITCHEN_DB_USER}
+    password: ${KITCHEN_DB_PASS}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USER}
+    password: ${RABBITMQ_PASS}
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 1000
+          max-attempts: 3
+          multiplier: 2.0
+          max-interval: 10000
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+server:
+  port: ${KITCHEN_WORKER_PORT}
+
+rabbitmq:
+  exchange:
+    name: ${RABBITMQ_EXCHANGE_NAME}
+  queue:
+    name: ${RABBITMQ_KITCHEN_QUEUE_NAME}
+  routing-key:
+    order-placed: ${RABBITMQ_ROUTING_KEY_ORDER_PLACED}
+  dlq:
+    name: ${RABBITMQ_KITCHEN_DLQ_NAME}
+    exchange: ${RABBITMQ_KITCHEN_DLX_NAME}
+    routing-key: ${RABBITMQ_DLQ_ROUTING_KEY}
+
