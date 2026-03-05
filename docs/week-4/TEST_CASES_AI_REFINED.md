@@ -1,7 +1,7 @@
 # Matriz de Ajuste
 
 
-## Matriz de Ajuste: HDU-01 — Respuesta 201 Created con Header Location
+HDU-01 — Respuesta 201 Created con Header Location
 
 | ID | Caso Original (Gema B) | Ajuste Realizado por el Probador | ¿Por qué se ajustó? |
 |---|---|---|---|
