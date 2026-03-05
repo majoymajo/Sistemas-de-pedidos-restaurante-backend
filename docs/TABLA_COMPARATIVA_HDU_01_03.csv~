@@ -1,0 +1,41 @@
+HDU,Aspecto,HU Original (TEST_PLAN_V3),HU Refinada (HDU_refinadas),Diferencias Detectadas
+HDU-01,Rol del Actor,Desarrollador del Frontend,Desarrollador del Frontend del Restaurante,"✅ Más específico: ""del Restaurante"" añade contexto de dominio"
+HDU-01,Objetivo Principal,El endpoint responda con `201 Created` y header `Location`,Que el endpoint de creación de órdenes responda con `201 Created` y header `Location` con la URI del recurso,"✅ Más explícito: especifica ""URI del recurso"" (antes era implícito)"
+HDU-01,Valor de Negocio,Para redirigir o consultar el estado de la nueva orden,Para que la aplicación pueda redirigir o consultar el estado de manera estandarizada y eficiente,"✅ Ampliado: añade ""estandarizada"" (conformidad REST) e ""eficiente"" (optimización UX)"
+HDU-01,Criterios de Aceptación,"3 escenarios Gherkin: Creación exitosa, Datos inválidos, Verificación de acceso","3 escenarios Gherkin: Creación exitosa, Datos inválidos, Verificación de acceso","✅ Idéntica en cobertura, **pero refinada en detalle**:"
+HDU-01,Criterios de Aceptación (Escenario 1),"Escenario 1: POST con tableId 1-12 y producto activo → 201 Created, header Location","Escenario 1: POST con tableId ∈ [1,12] y al menos un producto activo → 201 Created, Location URL válida, evento `order.placed` publicado en RabbitMQ","✅ **Añadido explícitamente**: validación del rango 1-12, publicación de evento, formato URL del header"
+HDU-01,Criterios de Aceptación (Escenario 2),"Escenario 2: POST con tableId 13 → 400 Bad Request, sin Location","Escenario 2: POST con tableId fuera de rango (13) → 400 Bad Request, sin Location",✅ Idéntica
+HDU-01,Criterios de Aceptación (Escenario 3),"Escenario 3: GET a URL del header con token → 200 OK, detalle con PENDING","Escenario 3: GET a la URL del header con X-Kitchen-Token → 200 OK, detalle con estado PENDING e items","✅ Más explícito: menciona ""X-Kitchen-Token"" (antes era token genérico), especifica ""items"" en respuesta"
+HDU-01,Reglas de Negocio Explícitas,Rango de tableId implícito,"tableId debe estar entre 1 y 12; al menos un producto activo","✅ **Sección dedicada ""Notas Adicionales""** con sub-historias sugeridas, dependencias (UUID previo), riesgos"
+HDU-01,Restricciones Técnicas,Genera UUID,"Requiere persistencia en `restaurant_db` para generación de UUID previo al header; el UUID es la fuente de verdad","✅ Especifica qué BD (`restaurant_db`), momento de generación (previo al header)"
+HDU-01,Seguridad,Acceso con token,"Acceso con token de cocina (`X-Kitchen-Token`)","✅ Especifica el nombre del header de seguridad"
+HDU-01,Precisión INVEST,"✓ Independiente, negociable, valiosa, estimable, pequeña, testable","✓ Mismo nivel + más testable por criterios explícitos","✅ Mejora en **testabilidad** (criterios más específicos) y **estimabilidad** (dependencias claras)"
+HDU-01,Aserciones Transversales Añadidas,No especificadas,"Sección ""Aserciones transversales para todos los 201"": Content-Type, Location pattern, status = PENDING, createdAt ISO 8601","✅ **Mejora crítica**: proporciona checklist reutilizable para todas las respuestas 201"
+HDU-01,Riesgos Documentados,Implícitos,"Explícitamente: ruptura con Frontend anterior, latencia bajo Reverse Proxy","✅ Identifica y comunica riesgos de implementación"
+HDU-02,Aspecto,HU Original (TEST_PLAN_V3),HU Refinada (HDU_refinadas),Diferencias Detectadas
+HDU-02,Rol del Actor,Desarrollador Frontend del Sistema de Pedidos,Desarrollador Frontend del Sistema de Pedidos,✅ Idéntico
+HDU-02,Objetivo Principal,Los endpoints de consulta retornen `200 OK` con lista vacía,"Los endpoints de consulta de órdenes, menú y reportes retornen `200 OK` con lista vacía","✅ Más específico: enumera explícitamente los 3 endpoints (`/orders`, `/menu`, `/reports`)"
+HDU-02,Valor de Negocio,"Asegurar consistencia del contrato y evitar fallos en renderizado","Asegurar la consistencia del contrato de la API y evitar fallos en el renderizado por datos inexistentes","✅ Idéntica, pero más clara: explica la causa del fallo en frontend (""datos inexistentes"")"
+HDU-02,Criterios de Aceptación,"3 escenarios (Menú sin productos, Reportes sin ventas, Acceso no autorizado)","3 escenarios con especificación Gherkin estructurada",✅ Idéntica en cobertura
+HDU-02,Criterios de Aceptación (CA-1),"CA-1: Menú sin activos → 200 OK, body `[]`","CA-1: Menú sin activos → 200 OK, body exactamente `[]` (especifica JSON puro)","✅ Más preciso: ""exactamente"" enfatiza que NO es `null`"
+HDU-02,Criterios de Aceptación (CA-2),"CA-2: Reportes sin ventas en rango → 200 OK, lista vacía","CA-2: Reportes sin ventas en rango → 200 OK, lista en respuesta vacía",✅ Idéntica
+HDU-02,Criterios de Aceptación (CA-3),"CA-3: Sin X-Kitchen-Token → 401 Unauthorized, sin arreglo","CA-3: Sin X-Kitchen-Token → 401 Unauthorized, no retorna arreglo",✅ Idéntica
+HDU-02,Reglas de Negocio Explícitas,Implícitas,"Explícitamente: listas se inicializan con `new ArrayList<>()` para que Jackson serialice `[]` no `null`","✅ **Decisión técnica importante**: especifica mecanismo de implementación (Jackson, ArrayList inicializado)"
+HDU-02,Restricciones Técnicas,Implícitas,Dependencias documentadas: DTOs deben inicializar listas,✅ Comunica restricción técnica clave para implementación correcta
+HDU-02,Precisión INVEST,"✓ Independiente, valiosa, estimable, pequeña, testable","✓ Mismo nivel + más estimable (decisión técnica clara)","✅ Mejora en **estimabilidad**: el equipo sabe exactamente qué cambiar en DTOs"
+HDU-02,Riesgos Documentados,Implícitos,"Explícitamente: confusión frontend entre vacío y error, ocultamiento de errores 400 bajo arreglo vacío",✅ Identifica antimpatrones a evitar
+HDU-02,Sub-historias Sugeridas,No mencionadas,"Estandarización en `order-service` y `report-service` (segregación de trabajo)",✅ Proporciona decomposición operativa
+HDU-03,Aspecto,HU Original (TEST_PLAN_V3),HU Refinada (HDU_refinadas),Diferencias Detectadas
+HDU-03,Rol del Actor,Desarrollador del Frontend del Sistema de Pedidos,Desarrollador del Frontend del Sistema de Pedidos,✅ Idéntico
+HDU-03,Objetivo Principal,La API valide estructura y tipo de datos recibidos,La API valide estructura y tipo de datos recibidos,✅ Idéntico
+HDU-03,Valor de Negocio,"Recibir 400 Bad Request con mensaje descriptivo","Recibir 400 Bad Request que detalle el error de entrada",✅ Idéntico, reforzado
+HDU-03,Criterios de Aceptación,"3 escenarios: JSON malformado, tipo incorrecto, petición válida","3 escenarios Gherkin con ejemplos concretos",✅ Idéntica en cobertura
+HDU-03,Criterios de Aceptación (Escenario 1),"Escenario 1: JSON inválido → 400, mensaje descriptivo","Escenario 1: JSON inválido (ej. body mal formado) → 400, mensaje descriptivo del error de formato",✅ Añade "ej. body mal formado" para claridad
+HDU-03,Criterios de Aceptación (Escenario 2),"Escenario 2: tableId = ""mesa_uno"" → 400, detallar tipo","Escenario 2: tableId = ""mesa_uno"" (string en lugar de int) → 400, detallar tipo esperado vs recibido","✅ Más explícito: especifica el tipo esperado (int) y recibido (string)"
+HDU-03,Criterios de Aceptación (Escenario 3),"Escenario 3: JSON válido → 201, evento publicado","Escenario 3: JSON válido y tipos correctos → 201, evento order.placed publicado en RabbitMQ","✅ Más explícito: ""JSON válido"" + ""tipos correctos"" + especifica evento y destino (RabbitMQ)"
+HDU-03,Reglas de Negocio Explícitas,Implícitas,"Explícitamente: tableId espera número entero",✅ Documenta la expectativa de tipo
+HDU-03,Restricciones Técnicas,Implícitas,"Explícitamente: DTOs anotados correctamente para validación de Jackson",✅ Comunica responsabilidad técnica
+HDU-03,Seguridad,No mencionada,No mencionada (heredado),⚠️ Neutral
+HDU-03,Precisión INVEST,"✓ Independiente, valiosa, estimable, testable","✓ Mismo + más estimable","✅ Mejora en **claridad de entrega**: sabe que necesita handlers de tipo mismatch"
+HDU-03,Riesgos Documentados,No mencionados,"Impacto en Frontend (puede no estar preparado), saturación de logs",✅ Identifica dependencias de frontend
+HDU-03,Sub-historias Sugeridas,No mencionadas,RFC 7807 y validación de formatos ISO 8601,✅ Proporciona estándares a implementar

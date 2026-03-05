@@ -8,7 +8,7 @@ Backend del sistema de pedidos, compuesto por tres microservicios Java 17 / Spri
 
 | Documento | Descripción | Cuándo usarlo |
 |-----------|-------------|---------------|
-| **[CONTEXTO_PROYECTO.md](CONTEXTO_PROYECTO.md)** | 📋 Documentación completa del proyecto | Onboarding, referencia técnica completa |
+| **[CONTEXTO_PROYECTO.md](docs/week-4/CONTEXTO_PROYECTO.md)** | 📋 Documentación completa del proyecto | Onboarding, referencia técnica completa |
 | **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** | 🚀 Guía rápida de comandos esenciales | Día a día, comandos frecuentes |
 | **[docs/Serenity BDD/guia_serenity_bdd.md](docs/Serenity%20BDD/guia_serenity_bdd.md)** | 🧪 Guía completa de automatización QA | Trabajar con pruebas Serenity |
 | **[docs/GUIA_ENDPOINTS_Y_DB.md](docs/GUIA_ENDPOINTS_Y_DB.md)** | 🔌 Referencia API + esquema DB | Integración con APIs, consultas DB |
@@ -514,7 +514,7 @@ Serenity/
 
 ## 📋 Documentación Adicional
 
-- **[CONTEXTO_PROYECTO.md](CONTEXTO_PROYECTO.md)** — Documentación completa del proyecto
+- **[CONTEXTO_PROYECTO.md](docs/week-4/CONTEXTO_PROYECTO.md)** — Documentación completa del proyecto
 - **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** — Comandos esenciales de uso diario
 - **[docs/HANDOVER_REPORT.md](docs/HANDOVER_REPORT.md)** — Reporte de handover del proyecto
 - **[docs/week-3-review/ARCHITECTURE.md](docs/week-3-review/ARCHITECTURE.md)** — Decisiones arquitectónicas
@@ -539,7 +539,7 @@ Este es un proyecto **brownfield** recibido como handover. Por favor revisa las 
 ## 📞 Soporte
 
 Para preguntas o issues:
-1. Revisa primero [CONTEXTO_PROYECTO.md](CONTEXTO_PROYECTO.md)
+1. Revisa primero [CONTEXTO_PROYECTO.md](docs/week-4/CONTEXTO_PROYECTO.md)
 2. Consulta [QUICK_REFERENCE.md](QUICK_REFERENCE.md) para comandos
 3. Busca en la documentación de `docs/`
 4. Abre un issue en GitHub
