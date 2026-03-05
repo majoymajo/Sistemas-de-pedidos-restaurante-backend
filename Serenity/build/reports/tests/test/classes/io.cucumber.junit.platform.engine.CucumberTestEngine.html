@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">9.944s</div>
+<div class="counter">8.751s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,17 +79,17 @@
 </thead>
 <tr>
 <td class="success">Creación fallida no incluye header Location</td>
-<td class="success">0.256s</td>
+<td class="success">0.304s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">Crear una orden exitosamente retorna 201 con Location</td>
-<td class="success">9.328s</td>
+<td class="success">7.953s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">La URL del header Location es accesible</td>
-<td class="success">0.360s</td>
+<td class="success">0.494s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -97,8 +97,8 @@
 <div class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>07:55:59.494 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - === Iniciando suite de pruebas Serenity BDD ===
-07:56:00.670 [Test worker] INFO   - ?[96m
+<pre>12:19:09.719 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - === Iniciando suite de pruebas Serenity BDD ===
+12:19:10.780 [Test worker] INFO   - ?[96m
 
 -------------------------------------------------------------------------------------
      _______. _______ .______       _______ .__   __.  __  .___________.____    ____ 
@@ -115,8 +115,8 @@
  Join the Serenity Community on Gitter: https://gitter.im/serenity-bdd/serenity-core 
 -------------------------------------------------------------------------------------
 ?[0m
-07:56:00.682 [Test worker] INFO   - Test Suite Started: Creación de recursos con semántica HTTP correcta
-07:56:01.051 [Test worker] INFO   - 
+12:19:10.796 [Test worker] INFO   - Test Suite Started: Creación de recursos con semántica HTTP correcta
+12:19:11.213 [Test worker] INFO   - 
   _____   ___   ___   _____     ___   _____     _     ___   _____   ___   ___  
  |_   _| | __| / __| |_   _|   / __| |_   _|   /_\   | _ \ |_   _| | __| |   \ 
    | |   | _|  \__ \   | |     \__ \   | |    / _ \  |   /   | |   | _|  | |) |
@@ -124,17 +124,17 @@
 
 Crear una orden exitosamente retorna 201 con Location(creación-de-recursos-con-semántica-http-correcta;crear-una-orden-exitosamente-retorna-201-con-location)
 --------------------------------------------------------------------------------
-07:56:01.152 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Preparando escenario ---
-07:56:01.163 [Test worker] INFO   - ?[92m|-- Dado que el catálogo de productos contiene al menos un producto activo con id 1?[0m
-07:56:06.597 [Test worker] INFO   - ?[92m|-- Y que la mesa 5 se encuentra disponible?[0m
-07:56:06.744 [Test worker] INFO   - ?[92m|-- Dado que el payload de la orden es válido con tableId 5 y productId 1 con quantity 2?[0m
-07:56:06.749 [Test worker] INFO   - ?[92m|-- Cuando se envía una solicitud POST a &quot;/orders&quot;?[0m
-07:56:09.033 [Test worker] INFO   - ?[92m|-- Entonces la respuesta debe tener código 201?[0m
-07:56:09.036 [Test worker] INFO   - ?[92m|-- Y debe incluir el header &quot;Location&quot; con el patrón &quot;/orders/{uuid}&quot;?[0m
-07:56:09.046 [Test worker] INFO   - ?[92m|-- Y el campo &quot;status&quot; debe ser &quot;PENDING&quot;?[0m
-07:56:10.141 [Test worker] INFO   - ?[92m|-- Y el header &quot;Content-Type&quot; debe ser &quot;application/json&quot;?[0m
-07:56:10.146 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Finalizando escenario ---
-07:56:10.151 [Test worker] INFO   - ?[92m
+12:19:11.333 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Preparando escenario ---
+12:19:11.348 [Test worker] INFO   - ?[92m|-- Dado que el catálogo de productos contiene al menos un producto activo con id 1?[0m
+12:19:16.102 [Test worker] INFO   - ?[92m|-- Y que la mesa 5 se encuentra disponible?[0m
+12:19:16.225 [Test worker] INFO   - ?[92m|-- Dado que el payload de la orden es válido con tableId 5 y productId 1 con quantity 2?[0m
+12:19:16.227 [Test worker] INFO   - ?[92m|-- Cuando se envía una solicitud POST a &quot;/orders&quot;?[0m
+12:19:17.624 [Test worker] INFO   - ?[92m|-- Entonces la respuesta debe tener código 201?[0m
+12:19:17.625 [Test worker] INFO   - ?[92m|-- Y debe incluir el header &quot;Location&quot; con el patrón &quot;/orders/{uuid}&quot;?[0m
+12:19:17.632 [Test worker] INFO   - ?[92m|-- Y el campo &quot;status&quot; debe ser &quot;PENDING&quot;?[0m
+12:19:18.882 [Test worker] INFO   - ?[92m|-- Y el header &quot;Content-Type&quot; debe ser &quot;application/json&quot;?[0m
+12:19:18.888 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Finalizando escenario ---
+12:19:18.896 [Test worker] INFO   - ?[92m
   _____   ___   ___   _____     ___     _     ___   ___   ___   ___  
  |_   _| | __| / __| |_   _|   | _ \   /_\   / __| / __| | __| |   \ 
    | |   | _|  \__ \   | |     |  _/  / _ \  \__ \ \__ \ | _|  | |) |
@@ -142,7 +142,7 @@ Crear una orden exitosamente retorna 201 con Location(creación-de-recursos-con-
 
 Crear una orden exitosamente retorna 201 con Location
 ----------------------------------------------------------------------?[0m
-07:56:10.224 [Test worker] INFO   - 
+12:19:18.985 [Test worker] INFO   - 
   _____   ___   ___   _____     ___   _____     _     ___   _____   ___   ___  
  |_   _| | __| / __| |_   _|   / __| |_   _|   /_\   | _ \ |_   _| | __| |   \ 
    | |   | _|  \__ \   | |     \__ \   | |    / _ \  |   /   | |   | _|  | |) |
@@ -150,15 +150,15 @@ Crear una orden exitosamente retorna 201 con Location
 
 La URL del header Location es accesible(creación-de-recursos-con-semántica-http-correcta;la-url-del-header-location-es-accesible)
 --------------------------------------------------------------------------------
-07:56:10.235 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Preparando escenario ---
-07:56:10.237 [Test worker] INFO   - ?[92m|-- Dado que el catálogo de productos contiene al menos un producto activo con id 1?[0m
-07:56:10.298 [Test worker] INFO   - ?[92m|-- Y que la mesa 5 se encuentra disponible?[0m
-07:56:10.300 [Test worker] INFO   - ?[92m|-- Dado que se creó una orden exitosamente vía POST a &quot;/orders&quot;?[0m
-07:56:10.389 [Test worker] INFO   - ?[92m|-- Cuando se envía una solicitud GET a la URL del header &quot;Location&quot;?[0m
-07:56:10.518 [Test worker] INFO   - ?[92m|-- Entonces la respuesta debe tener código 200?[0m
-07:56:10.519 [Test worker] INFO   - ?[92m|-- Y el cuerpo debe contener la misma orden creada previamente?[0m
-07:56:10.537 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Finalizando escenario ---
-07:56:10.538 [Test worker] INFO   - ?[92m
+12:19:19.010 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Preparando escenario ---
+12:19:19.011 [Test worker] INFO   - ?[92m|-- Dado que el catálogo de productos contiene al menos un producto activo con id 1?[0m
+12:19:19.098 [Test worker] INFO   - ?[92m|-- Y que la mesa 5 se encuentra disponible?[0m
+12:19:19.099 [Test worker] INFO   - ?[92m|-- Dado que se creó una orden exitosamente vía POST a &quot;/orders&quot;?[0m
+12:19:19.224 [Test worker] INFO   - ?[92m|-- Cuando se envía una solicitud GET a la URL del header &quot;Location&quot;?[0m
+12:19:19.390 [Test worker] INFO   - ?[92m|-- Entonces la respuesta debe tener código 200?[0m
+12:19:19.392 [Test worker] INFO   - ?[92m|-- Y el cuerpo debe contener la misma orden creada previamente?[0m
+12:19:19.415 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Finalizando escenario ---
+12:19:19.416 [Test worker] INFO   - ?[92m
   _____   ___   ___   _____     ___     _     ___   ___   ___   ___  
  |_   _| | __| / __| |_   _|   | _ \   /_\   / __| / __| | __| |   \ 
    | |   | _|  \__ \   | |     |  _/  / _ \  \__ \ \__ \ | _|  | |) |
@@ -166,7 +166,7 @@ La URL del header Location es accesible(creación-de-recursos-con-semántica-htt
 
 La URL del header Location es accesible
 ----------------------------------------------------------------------?[0m
-07:56:10.582 [Test worker] INFO   - 
+12:19:19.537 [Test worker] INFO   - 
   _____   ___   ___   _____     ___   _____     _     ___   _____   ___   ___  
  |_   _| | __| / __| |_   _|   / __| |_   _|   /_\   | _ \ |_   _| | __| |   \ 
    | |   | _|  \__ \   | |     \__ \   | |    / _ \  |   /   | |   | _|  | |) |
@@ -174,16 +174,16 @@ La URL del header Location es accesible
 
 Creación fallida no incluye header Location(creación-de-recursos-con-semántica-http-correcta;creación-fallida-no-incluye-header-location)
 --------------------------------------------------------------------------------
-07:56:10.588 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Preparando escenario ---
-07:56:10.596 [Test worker] INFO   - ?[92m|-- Dado que el catálogo de productos contiene al menos un producto activo con id 1?[0m
-07:56:10.658 [Test worker] INFO   - ?[92m|-- Y que la mesa 5 se encuentra disponible?[0m
-07:56:10.660 [Test worker] INFO   - ?[92m|-- Dado que el payload contiene un tableId inválido de 0?[0m
-07:56:10.662 [Test worker] INFO   - ?[92m|-- Cuando se envía una solicitud POST a &quot;/orders&quot;?[0m
-07:56:10.750 [Test worker] INFO   - ?[92m|-- Entonces la respuesta debe tener código 400?[0m
-07:56:10.752 [Test worker] INFO   - ?[92m|-- Y no debe incluir el header &quot;Location&quot;?[0m
-07:56:10.754 [Test worker] INFO   - ?[92m|-- Y el cuerpo debe seguir la estructura ErrorResponse?[0m
-07:56:10.778 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Finalizando escenario ---
-07:56:10.779 [Test worker] INFO   - ?[92m
+12:19:19.562 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Preparando escenario ---
+12:19:19.565 [Test worker] INFO   - ?[92m|-- Dado que el catálogo de productos contiene al menos un producto activo con id 1?[0m
+12:19:19.663 [Test worker] INFO   - ?[92m|-- Y que la mesa 5 se encuentra disponible?[0m
+12:19:19.665 [Test worker] INFO   - ?[92m|-- Dado que el payload contiene un tableId inválido de 0?[0m
+12:19:19.667 [Test worker] INFO   - ?[92m|-- Cuando se envía una solicitud POST a &quot;/orders&quot;?[0m
+12:19:19.735 [Test worker] INFO   - ?[92m|-- Entonces la respuesta debe tener código 400?[0m
+12:19:19.738 [Test worker] INFO   - ?[92m|-- Y no debe incluir el header &quot;Location&quot;?[0m
+12:19:19.740 [Test worker] INFO   - ?[92m|-- Y el cuerpo debe seguir la estructura ErrorResponse?[0m
+12:19:19.760 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Finalizando escenario ---
+12:19:19.761 [Test worker] INFO   - ?[92m
   _____   ___   ___   _____     ___     _     ___   ___   ___   ___  
  |_   _| | __| / __| |_   _|   | _ \   /_\   / __| / __| | __| |   \ 
    | |   | _|  \__ \   | |     |  _/  / _ \  \__ \ \__ \ | _|  | |) |
@@ -191,7 +191,7 @@ Creación fallida no incluye header Location(creación-de-recursos-con-semántic
 
 Creación fallida no incluye header Location
 ----------------------------------------------------------------------?[0m
-07:56:10.834 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - === Suite de pruebas finalizada ===
+12:19:19.789 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - === Suite de pruebas finalizada ===
 </pre>
 </span>
 </div>
@@ -203,7 +203,7 @@ Creación fallida no incluye header Location
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 8.14</a> at 3 Mar 2026, 7:56:11 am</p>
+<a href="https://www.gradle.org">Gradle 8.14</a> at 3 mar. 2026 12:19:20</p>
 </div>
 </div>
 </body>

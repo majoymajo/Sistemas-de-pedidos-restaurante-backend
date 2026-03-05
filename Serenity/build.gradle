@@ -14,11 +14,11 @@ plugins {
 defaultTasks 'clean', 'test', 'aggregate'
 
 // ---------------------------------------------------------------------------
-// Versión de Java — usando Java 24 del sistema
+// Versión de Java — usando Java 17 (compatible con backend services)
 // ---------------------------------------------------------------------------
 java {
-    sourceCompatibility = JavaVersion.VERSION_24
-    targetCompatibility = JavaVersion.VERSION_24
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 // ---------------------------------------------------------------------------
@@ -93,11 +93,12 @@ dependencies {
     // Coincide con lo que tus servicios backend ya utilizan.
     testImplementation "org.assertj:assertj-core:${assertjVersion}"
 
-    // ── Lombok (disabled for Java 24 compatibility) ────────────────────────
-    // compileOnly     "org.projectlombok:lombok:${lombokVersion}"
-    // annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-    // testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
-    // testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    // ── Lombok ─────────────────────────────────────────────────────────────
+    // Reduce boilerplate en POJOs (DTOs, models)
+    compileOnly     "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
     // ── Logging ────────────────────────────────────────────────────────────
     // SLF4J + Logback para logging consistente en la ejecución de pruebas.
@@ -106,11 +107,26 @@ dependencies {
 }
 
 // ---------------------------------------------------------------------------
+// Configuración de encoding UTF-8 (CRÍTICO para archivos .feature en español)
+// ---------------------------------------------------------------------------
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Test) {
+    systemProperty "file.encoding", "UTF-8"
+}
+
+// ---------------------------------------------------------------------------
 // Configuración de pruebas
 // ---------------------------------------------------------------------------
 test {
     // Usa la Plataforma JUnit 5 (requerido para integración Serenity + Cucumber)
     useJUnitPlatform()
+
+    // Forzar encoding UTF-8 para archivos .feature en español
+    systemProperty "file.encoding", "UTF-8"
+    jvmArgs '-Dfile.encoding=UTF-8'
 
     // Pasa propiedades del sistema desde la línea de comandos al JVM de pruebas.
     // Esto habilita: gradle test -Denvironment=staging
@@ -147,6 +163,8 @@ serenity {
 tasks.register('smoke', Test) {
     useJUnitPlatform()
     systemProperty 'cucumber.filter.tags', '@smoke'
+    systemProperty "file.encoding", "UTF-8"
+    jvmArgs '-Dfile.encoding=UTF-8'
     systemProperties System.getProperties()
     finalizedBy 'aggregate'
 }
@@ -155,6 +173,8 @@ tasks.register('smoke', Test) {
 tasks.register('regression', Test) {
     useJUnitPlatform()
     systemProperty 'cucumber.filter.tags', '@regression and not @wip'
+    systemProperty "file.encoding", "UTF-8"
+    jvmArgs '-Dfile.encoding=UTF-8'
     systemProperties System.getProperties()
     finalizedBy 'aggregate'
 }
@@ -164,6 +184,8 @@ tasks.register('hdu', Test) {
     useJUnitPlatform()
     def tagFilter = project.hasProperty('tag') ? "@${project.property('tag')}" : '@HDU-01'
     systemProperty 'cucumber.filter.tags', tagFilter
+    systemProperty "file.encoding", "UTF-8"
+    jvmArgs '-Dfile.encoding=UTF-8'
     systemProperties System.getProperties()
     finalizedBy 'aggregate'
 }
