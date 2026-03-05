@@ -36,7 +36,7 @@
 
 ---
 
-## Matriz de Ajuste: HDU-02 — Respuesta 200 OK con Lista Vacía
+## HDU-02 — Respuesta 200 OK con Lista Vacía
 
 | ID | Caso Original (Gema B) | Ajuste Realizado por el Probador | ¿Por qué se ajustó? |
 |---|---|---|---|
@@ -58,7 +58,7 @@
 
 ---
 
-## Matriz de Ajuste: HDU-03 — Validación de Estructura y Tipo de Datos con 400
+##  HDU-03 — Validación de Estructura y Tipo de Datos con 400
 
 | ID | Caso Original (Gema B) | Ajuste Realizado por el Probador | ¿Por qué se ajustó? |
 |---|---|---|---|
