@@ -29,7 +29,7 @@ ext {
     cucumberVersion       = '7.20.1'
     junitVersion          = '5.11.4'
     restAssuredVersion    = '5.5.0'
-    lombokVersion         = '1.18.36'
+    lombokVersion         = '1.18.38'
     assertjVersion        = '3.27.3'
     logbackVersion        = '1.5.16'
     slf4jVersion          = '2.0.16'
