@@ -155,6 +155,14 @@ serenity {
     // The serenity plugin 4.x reads configuration from serenity.conf instead
 }
 
+// Workaround for iCloud Drive placeholder files causing snapshot failures
+afterEvaluate {
+    tasks.matching { it.name == 'aggregate' }.configureEach {
+        doNotTrackState("iCloud Drive creates placeholder files that cannot be snapshotted")
+        outputs.upToDateWhen { false }
+    }
+}
+
 // ---------------------------------------------------------------------------
 // Tareas personalizadas
 // ---------------------------------------------------------------------------
