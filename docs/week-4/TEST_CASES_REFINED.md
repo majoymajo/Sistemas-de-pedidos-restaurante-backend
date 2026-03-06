@@ -129,3 +129,36 @@
 | **CT-05-013** | Validaciones superpuestas de choque al tiempo. Retorna → 400. | Ejecutar llamadas sin mesa y datos puros `[]`. Retorna → 400 estableciendo normativas bases si evalua fail fast u ofrece la completitud formal dictaminada en contrato base resolutivo conjunto. | Formalizar normativas conjuntas disipa las resoluciones continuadas tediosas ofreciéndole al visualizador cliente opciones unidas conjuntas para que sane asimetrías sin recargas extra en api. |
 | **CT-05-014** | Errores tolerantes a inyecciones. Retorna → Error estándar. | Infiltrar adjuntos extras al array del control `ErrorResponse`. Retorna → JSON estable evitando quiebres nativos asimilando a todo momento factores requeribles. | Aceptar adjuntos progresivos permite crecimientos maduros sobre reportes profundos en backend que no arruinan módulos débiles desactualizados al conservar compatibles. |
 | **CT-05-015** | Transición asíncrona ilógica estado vivo. Retorna → 409. | Enviar parche evaluativo estado preparativo PENDING a READY. Retorna → 409 . | El freno impuesto garantiza fluidez oficial sin manipuleo o atajos perjudiciales operativos sobre cocina base final validante . |
+
+---
+
+## HDU-07 — Validación de Máquina de Estados en Transiciones de Órdenes
+
+| ID | Caso Original (Gema B) | Ajuste Realizado por el Probador | ¿Por qué se ajustó? |
+|---|---|---|---|
+| **CT-07-001** | Transición válida PENDING → IN_PREPARATION. Retorna → 200 OK. | Verificar que el estado persiste correctamente en DB tras el PATCH y que la respuesta incluye el nuevo estado. Retorna → 200 OK. | Confirmar que la actualización es efectiva tanto en la respuesta como en persistencia, no solo en memoria. |
+| **CT-07-002** | Salto de estado PENDING → READY (saltando IN_PREPARATION). Retorna → 409 Conflict. | PATCH a READY desde PENDING. Retorna → 409 Conflict con mensaje descriptivo indicando la transición inválida. | La máquina de estados no permite saltos. El error debe ser claro para que el operador de cocina entienda el flujo correcto. |
+| **CT-07-003** | Transición hacia atrás IN_PREPARATION → PENDING. Retorna → 409 Conflict. | PATCH a PENDING desde IN_PREPARATION. Retorna → 409 Conflict. El estado NO debe revertirse. | Retroceder en el flujo rompe la trazabilidad del pedido. El sistema debe rechazarlo explícitamente. |
+| **CT-07-004** | PATCH sin X-Kitchen-Token. Retorna → 401 Unauthorized. | Ningún cambio adicional. | Solo el personal de cocina autenticado puede cambiar estados de órdenes. |
+| **CT-07-005** | PATCH sobre orden inexistente. Retorna → 404 Not Found. | UUID aleatorio no existente en DB. Retorna → 404 con JSON estándar. | Una orden que no existe no puede actualizarse. El error debe ser claro y estandarizado. |
+
+### Revisión humana
+> ⚠️ **Conflicto de código HTTP con HDU-08:** Los casos CT-07-002 y CT-07-003 retornan `409 Conflict` para transiciones de estado inválidas, mientras que HDU-08 (CT-08-002) usa `422 Unprocessable Entity` para el mismo tipo de error. Esto genera dos rutas de manejo de error en el frontend para la misma excepción de negocio, aumentando la complejidad y el riesgo de bugs. **Se recomienda unificar ambas historias en un único código HTTP** — `409 Conflict` es semánticamente más preciso para violaciones de máquina de estados.
+>
+> 💡 **Mejora:** El CT-05-015 en HDU-05 ya cubre parcialmente este escenario (transición PENDING → READY). Sería conveniente consolidar estos casos en la sección HDU-07 para evitar duplicación de cobertura entre matrices.
+
+---
+
+## HDU-08 — Respuesta 422 Unprocessable Entity para Errores de Validación de Negocio
+
+| ID | Caso Original (Gema B) | Ajuste Realizado por el Probador | ¿Por qué se ajustó? |
+|---|---|---|---|
+| **CT-08-001** | Crear orden con tableId mayor a 12. Retorna → 422 Unprocessable Entity. | POST /orders con tableId=13. Retorna → 422 con mensaje indicando rango válido (1-12). Verificar que no se persista la orden ni se publique evento RabbitMQ. | La validación de negocio debe impedir que el sistema acepte datos fuera del contrato antes de cualquier procesamiento. |
+| **CT-08-002** | Transición de estado inválida READY → IN_PREPARATION. Retorna → 422 Unprocessable Entity. | PATCH de READY a IN_PREPARATION. Retorna → 422 con mensaje indicando que el estado no puede retroceder. | Esta transición viola las reglas de negocio de la máquina de estados. El error debe ser explícito y consistente. |
+| **CT-08-003** | JSON malformado para confirmar distinción 400 vs 422. Retorna → 400 Bad Request. | POST con JSON que tiene una llave sin cerrar. Retorna → 400 (no 422), confirmando que el formato roto es error técnico, no de negocio. | La distinción 400/422 es clave para el frontend: 400 = corregir el JSON; 422 = corregir la lógica de negocio enviada. |
+| **CT-08-004** | Crear orden con items vacíos `[]`. Retorna → 422. | POST con items=[]. Retorna → 422 con mensaje "se requiere al menos un ítem". | Una orden sin ítems es inválida por regla de negocio, no por formato. Debe retornar 422 para que el frontend distinga el tipo de error. |
+
+### Revisión humana
+> ⚠️ **Conflicto de código HTTP con HDU-07:** CT-08-002 retorna `422 Unprocessable Entity` para una transición de estado inválida (`READY → IN_PREPARATION`), mientras que HDU-07 retorna `409 Conflict` para el mismo tipo de fallo. Mantener dos códigos HTTP distintos para la misma excepción de negocio obliga al cliente a implementar dos handlers separados sin razón, generando complejidad innecesaria y posibles bugs cuando uno de los dos no esté cubierto. **Se recomienda consolidar en un único código HTTP para toda la matriz de pruebas** — idealmente `409 Conflict`.
+>
+> 💡 **Mejora de alcance:** CT-08-001 (validación de `tableId`) solapa con casos ya cubiertos en HDU-03 y HDU-05. Revisar si este caso debe mantenerse aquí o unificarse en la sección correspondiente para evitar duplicación y conflictos de criterio entre el Probador y la IA.
