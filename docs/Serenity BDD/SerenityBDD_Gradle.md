@@ -1,7 +1,7 @@
 # Serenity BDD — Guía Completa de Configuración e Implementación
 
 **Para:** Sistema de Pedidos de Restaurante — Automatización QA  
-**Fecha:** 2 de marzo de 2026  
+**Fecha:** 6 de marzo de 2026  
 **Contexto:** Proyecto Serenity BDD basado en Gradle para pruebas de API REST
 
 ---
@@ -980,9 +980,6 @@ graph LR
 | **Definiciones de Pasos** | Código Java que implementa cada paso Gherkin | `src/test/java/.../stepdefinitions/` |
 | **Reporte de Serenity** | La documentación viva generada | `target/site/serenity/index.html` |
 
-> [!TIP]
-> **Comienza pequeño**: Empieza automatizando tus escenarios `@smoke` (MAN-01 a MAN-07 de tu plan de pruebas). Esto te da el ciclo de retroalimentación más rápido y valida la configuración de tu framework. Luego expande a la suite completa de integración INT-* de forma incremental, una HDU a la vez.
 
 ---
 
-*Guía preparada para el proyecto de Automatización QA del Sistema de Pedidos de Restaurante. Serenity BDD versión 4.2.12, Cucumber 7.20.1, JUnit 5.11.4.*
