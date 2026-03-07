@@ -283,6 +283,11 @@ Y debe retornar 409 Conflict
 - **Sub-historias:** Implementación del `GlobalExceptionHandler` · Lógica de validación de máquina de estados en el dominio.
 - **Riesgos:** Inconsistencia si el frontend no maneja el código 409 correctamente, mostrando un mensaje genérico al usuario.
 
+### Revisión humana
+> ⚠️ **Conflicto de código HTTP con HDU-08:** Esta historia retorna `409 Conflict` ante una transición de estado inválida, mientras que HDU-08 retorna `422 Unprocessable Entity` para el mismo tipo de error (violación de la máquina de estados). Tener dos códigos HTTP diferentes para el mismo escenario genera inconsistencia en el backend y obliga al frontend a manejar dos caminos de error distintos, aumentando la complejidad innecesariamente y el riesgo de bugs. **Se recomienda unificar en un único código HTTP** — preferiblemente `409 Conflict` para conflictos de estado de negocio, ya que semánticamente describe mejor una colisión con el estado actual del recurso.
+>
+> 💡 **Mejora de redacción:** El rol "Sistema de Cocina" como actor es poco convencional en formato de historia de usuario. Sería más preciso usar "Operador de Cocina" o "Personal de Cocina" para hacer la historia más legible y alineada con el estándar INVEST.
+
 ---
 
 ## HDU-08 — Respuesta 422 Unprocessable Entity para Errores de Validación de Negocio
@@ -321,3 +326,8 @@ Y esto confirma la distinción entre error de formato (400) y error de negocio (
 - **Sub-historias:** Estandarización del objeto `ErrorResponse` · Validaciones personalizadas en Spring para `tableId` (1-12).
 - **Dependencias:** Requiere interceptores Axios/Fetch configurados en el frontend para el código 422.
 - **Riesgos:** Inconsistencia entre servicios si `order-service` y `report-service` no aplican el mismo criterio. No confundir errores Auth (401/403) con lógica de negocio.
+
+### Revisión humana
+> ⚠️ **Conflicto de código HTTP con HDU-07:** El Escenario 2 de esta historia retorna `422 Unprocessable Entity` para una transición de estado inválida (`READY → IN_PREPARATION`), mientras que HDU-07 retorna `409 Conflict` para el mismo tipo de fallo. Usar dos códigos HTTP distintos para la misma clase de error (violación de regla de negocio en la máquina de estados) genera ambigüedad en el contrato de la API y complejidad innecesaria en el cliente. **Se recomienda consolidar en un único código** para todos los errores de transición de estado — `409 Conflict` es la elección más semánticamente correcta para este contexto.
+>
+> 💡 **Mejora de alcance:** El Escenario 1 (mesa inválida) corresponde a una validación de entrada de datos, no a un error de lógica de negocio avanzada. Podría encajar mejor en HDU-03 (validación 400) o unificarse en un único estándar de error de negocio con HDU-05. Tener dos HDUs solapados en validaciones puede confundir al equipo sobre cuál implementar primero.
