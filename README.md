@@ -8,11 +8,12 @@ Backend del sistema de pedidos, compuesto por tres microservicios Java 17 / Spri
 
 | Documento | Descripción | Cuándo usarlo |
 |-----------|-------------|---------------|
-| **[CONTEXTO_PROYECTO.md](CONTEXTO_PROYECTO.md)** | 📋 Documentación completa del proyecto | Onboarding, referencia técnica completa |
 | **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** | 🚀 Guía rápida de comandos esenciales | Día a día, comandos frecuentes |
 | **[docs/Serenity BDD/SerenityBDD_Gradle.md](docs/Serenity%20BDD/SerenityBDD_Gradle.md)** | 🧪 Guía completa Serenity BDD + Gradle (build.gradle, serenity.conf, capas, reportes) | Configurar el framework de pruebas, entender el flujo de ejecución |
-| **[docs/Serenity BDD/Serenity_Layers_Structure.md](docs/Serenity%20BDD/Serenity_Layers_Structure.md)** | 🏛️ Arquitectura por capas del proyecto Serenity (runners, steps, actions, data, config, models) | Onboarding QA, revisiones de arquitectura, presentaciones |
+| **[docs/Serenity BDD/Serenity_Layers_Structure.md](docs/Serenity%20BDD/Serenity_Layers_Structure.md)** | 🏛️ Arquitectura por capas del proyecto Serenity | Onboarding QA, revisiones de arquitectura, presentaciones |
 | **[docs/GUIA_ENDPOINTS_Y_DB.md](docs/GUIA_ENDPOINTS_Y_DB.md)** | 🔌 Referencia API + esquema DB | Integración con APIs, consultas DB |
+| **[docs/TEST_CASES_MASTER.md](docs/TEST_CASES_MASTER.md)** | ✅ Casos de prueba consolidados (IA + revisión humana) | Revisión de cobertura de pruebas |
+| **[docs/HISTORIAS_USUARIO_MASTER.md](docs/HISTORIAS_USUARIO_MASTER.md)** | 📖 Historias de usuario consolidadas | Trazabilidad de requisitos |
 
 ---
 
@@ -412,12 +413,19 @@ Sistemas-de-pedidos-restaurante-backend/
 │   └── pom.xml
 ├── lombok.config                # Genera @Generated para exclusion JaCoCo
 ├── pom.xml                      # POM padre multi-modulo
-├── Taller Semana 4/             # Artefactos de análisis y refinamiento (Semana 4)
+├── scripts/                     # Scripts de utilidad y automatización
+│   ├── docker-helper.sh / .ps1  # Helpers para gestión de Docker
+│   ├── smoke-complete.sh        # Smoke tests manuales end-to-end
+│   ├── e2e-test.sh              # Pruebas end-to-end completas
+│   └── test-all.sh              # Ejecuta toda la suite de pruebas
+├── Taller Semana 4/             # Artefactos de análisis y refinamiento QA (Semana 4)
+│   ├── BUSINESS_CONTEXT.md      # Contexto de negocio del sistema
+│   ├── G7-Serenity BDD.pptx    # Presentación del framework Serenity BDD
 │   ├── TEST_CASES_AI.md         # Casos de prueba generados con IA (Gema B)
-│   ├── TEST_CASES_REFINED.md    # Casos de prueba ajustados por el tester humano
 │   └── USER_STORIES_REFINEMENT.md # Refinamiento de historias de usuario
 └── .github/workflows/
-    └── ci-cd.yml                # Pipeline CI/CD
+    ├── ci-cd.yml                # Pipeline CI/CD principal
+    └── main.yml                 # Pipeline adicional de CI
 ```
 
 ## Desarrollo local sin Docker
@@ -542,19 +550,31 @@ Serenity/
 
 ## 📋 Documentación Adicional
 
-- **[CONTEXTO_PROYECTO.md](CONTEXTO_PROYECTO.md)** — Documentación completa del proyecto
-- **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** — Comandos esenciales de uso diario
-- **[docs/HANDOVER_REPORT.md](docs/HANDOVER_REPORT.md)** — Reporte de handover del proyecto
-- **[docs/week-3-review/ARCHITECTURE.md](docs/week-3-review/ARCHITECTURE.md)** — Decisiones arquitectónicas
-- **[docs/TEST_PLAN.md](docs/TEST_PLAN.md)** — Plan de pruebas completo
+### 📁 Documentación General
+
+| Documento | Descripción |
+|-----------|-------------|
+| **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** | Comandos esenciales de uso diario |
+| **[docs/HANDOVER_REPORT.md](docs/HANDOVER_REPORT.md)** | Reporte de handover del proyecto |
+| **[docs/week-3-review/ARCHITECTURE.md](docs/week-3-review/ARCHITECTURE.md)** | Decisiones arquitectónicas |
+| **[docs/TEST_PLAN.md](docs/TEST_PLAN.md)** | Plan de pruebas completo |
+
+### 📁 Documentación Consolidada QA
+
+| Documento | Descripción |
+|-----------|-------------|
+| **[docs/TEST_CASES_MASTER.md](docs/TEST_CASES_MASTER.md)** | Casos de prueba consolidados — combina generación IA y revisión humana |
+| **[docs/HISTORIAS_USUARIO_MASTER.md](docs/HISTORIAS_USUARIO_MASTER.md)** | Historias de usuario consolidadas con criterios de aceptación refinados |
+| **[docs/REST_API_AUDIT.md](docs/REST_API_AUDIT.md)** | Auditoría completa de endpoints REST — contratos, validaciones y errores |
 
 ### 📂 Taller Semana 4 — Análisis y Refinamiento QA
 
 | Documento | Descripción |
 |-----------|-------------|
-| **[Taller Semana 4/TEST_CASES_AI.md](Taller%20Semana%204/TEST_CASES_AI.md)** | Casos de prueba generados con IA por Gema B (cobertura completa HDU-01 a HDU-08) |
-| **[Taller Semana 4/TEST_CASES_REFINED.md](Taller%20Semana%204/TEST_CASES_REFINED.md)** | Casos de prueba ajustados por el tester humano con rationale de negocio |
+| **[Taller Semana 4/BUSINESS_CONTEXT.md](Taller%20Semana%204/BUSINESS_CONTEXT.md)** | Contexto de negocio del sistema de pedidos |
+| **[Taller Semana 4/TEST_CASES_AI.md](Taller%20Semana%204/TEST_CASES_AI.md)** | Casos de prueba generados con IA (Gema B) — cobertura HDU-01 a HDU-08 |
 | **[Taller Semana 4/USER_STORIES_REFINEMENT.md](Taller%20Semana%204/USER_STORIES_REFINEMENT.md)** | Refinamiento de historias de usuario — criterios de aceptación ajustados |
+| **[Taller Semana 4/G7-Serenity BDD.pptx](Taller%20Semana%204/G7-Serenity%20BDD.pptx)** | Presentación del framework Serenity BDD (Grupo 7) |
 
 ---
 
@@ -563,4 +583,4 @@ Serenity/
 ---
 
 **Última actualización:** 6 de marzo de 2026  
-**Versión:** 2.1 (con documentación Serenity BDD detallada)
+**Versión:** 2.2 (sincronizado con main — nuevos docs consolidados QA y scripts)
