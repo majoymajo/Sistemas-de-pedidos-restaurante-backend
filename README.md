@@ -558,27 +558,7 @@ Serenity/
 
 ---
 
-## 🤝 Contribuir
-
-Este es un proyecto **brownfield** recibido como handover. Por favor revisa las **[instrucciones de Copilot](.github/copilot-instructions.md)** antes de hacer cambios.
-
-### Reglas críticas
-- ❌ NO romper funcionalidad existente
-- ❌ NO cambiar contratos REST/AMQP sin documentar
-- ❌ NO hacer llamadas REST entre servicios backend
-- ✅ SÍ escribir tests antes de código (TDD)
-- ✅ SÍ refactorizar para mejorar seguridad
-- ✅ SÍ documentar decisiones técnicas
-
----
-
-## 📞 Soporte
-
-Para preguntas o issues:
-1. Revisa primero [CONTEXTO_PROYECTO.md](CONTEXTO_PROYECTO.md)
-2. Consulta [QUICK_REFERENCE.md](QUICK_REFERENCE.md) para comandos
-3. Busca en la documentación de `docs/`
-4. Abre un issue en GitHub
+ Abre un issue en GitHub
 
 ---
 
