@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Cucumber" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-03-06T01:49:02.560Z" hostname="DESKTOP-I20AEIP" time="11.602">
+<testsuite name="Cucumber" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-03-06T19:41:50.682Z" hostname="DESKTOP-I20AEIP" time="37.391">
   <properties/>
-  <testcase name="Crear una orden exitosamente retorna 201 con Location" classname="io.cucumber.junit.platform.engine.CucumberTestEngine" time="9.85"/>
-  <testcase name="La URL del header Location es accesible" classname="io.cucumber.junit.platform.engine.CucumberTestEngine" time="1.346"/>
-  <testcase name="Creación fallida no incluye header Location" classname="io.cucumber.junit.platform.engine.CucumberTestEngine" time="0.399"/>
-  <system-out><![CDATA[20:49:01.217 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - === Iniciando suite de pruebas Serenity BDD ===
-20:49:02.227 [Test worker] INFO   - ?[96m
+  <testcase name="Crear una orden exitosamente retorna 201 con Location" classname="io.cucumber.junit.platform.engine.CucumberTestEngine" time="30.725"/>
+  <testcase name="La URL del header Location es accesible" classname="io.cucumber.junit.platform.engine.CucumberTestEngine" time="5.797"/>
+  <testcase name="Creación fallida no incluye header Location" classname="io.cucumber.junit.platform.engine.CucumberTestEngine" time="0.834"/>
+  <system-out><![CDATA[14:41:47.711 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - === Iniciando suite de pruebas Serenity BDD ===
+14:41:50.130 [Test worker] INFO   - ?[96m
 
 -------------------------------------------------------------------------------------
      _______. _______ .______       _______ .__   __.  __  .___________.____    ____ 
@@ -22,8 +22,8 @@
  Join the Serenity Community on Gitter: https://gitter.im/serenity-bdd/serenity-core 
 -------------------------------------------------------------------------------------
 ?[0m
-20:49:02.247 [Test worker] INFO   - Test Suite Started: Creación de recursos con semántica HTTP correcta
-20:49:02.920 [Test worker] INFO   - 
+14:41:50.169 [Test worker] INFO   - Test Suite Started: Creación de recursos con semántica HTTP correcta
+14:41:51.093 [Test worker] INFO   - 
   _____   ___   ___   _____     ___   _____     _     ___   _____   ___   ___  
  |_   _| | __| / __| |_   _|   / __| |_   _|   /_\   | _ \ |_   _| | __| |   \ 
    | |   | _|  \__ \   | |     \__ \   | |    / _ \  |   /   | |   | _|  | |) |
@@ -31,27 +31,27 @@
 
 Crear una orden exitosamente retorna 201 con Location(creación-de-recursos-con-semántica-http-correcta;crear-una-orden-exitosamente-retorna-201-con-location)
 --------------------------------------------------------------------------------
-20:49:03.342 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Preparando escenario ---
-20:49:03.369 [Test worker] INFO   - ?[92m|-- Dado que el catálogo de productos contiene al menos un producto activo con id 1?[0m
-20:49:03.983 [Test worker] INFO   - ?[92m|---- Verificar que el producto 1 existe y está activo?[0m
-20:49:03.991 [Test worker] INFO  c.r.qa.actions.ProductActions - Verificando producto con ID: 1
-20:49:08.993 [Test worker] WARN  c.r.qa.actions.ProductActions - Producto 1 no encontrado (status: 500)
-20:49:08.999 [Test worker] INFO   - ?[92m|-- Y que la mesa 5 se encuentra disponible?[0m
-20:49:09.236 [Test worker] INFO   - ?[92m|-- Dado que el payload de la orden es válido con tableId 5 y productId 1 con quantity 2?[0m
-20:49:09.245 [Test worker] INFO   - ?[92m|-- Cuando se envía una solicitud POST a "/orders"?[0m
-20:49:09.250 [Test worker] INFO   - ?[92m|---- Crear nueva orden con payload: OrderRequest(tableId=5, items=[OrderItem(productId=1, quantity=2), OrderItem(productId=1, quantity=2)])?[0m
-20:49:09.251 [Test worker] INFO  c.restaurant.qa.actions.OrderActions - Creando orden para mesa 5
-20:49:11.203 [Test worker] INFO  c.restaurant.qa.actions.OrderActions - Respuesta recibida con código: 201
-20:49:11.205 [Test worker] INFO   - ?[92m|-- Entonces la respuesta debe tener código 201?[0m
-20:49:11.209 [Test worker] INFO   - ?[92m|---- Verificar que el código de respuesta es 201?[0m
-20:49:11.213 [Test worker] INFO  c.r.qa.actions.ValidationActions - Verificando código de respuesta: esperado=201, actual=201
-20:49:11.217 [Test worker] INFO   - ?[92m|-- Y debe incluir el header "Location" con el patrón "/orders/{uuid}"?[0m
-20:49:11.221 [Test worker] INFO   - ?[92m|---- Verificar que el header Location coincide con el patrón '/orders/{uuid}'?[0m
-20:49:11.236 [Test worker] INFO   - ?[92m|-- Y el campo "status" debe ser "PENDING"?[0m
-20:49:11.240 [Test worker] INFO   - ?[92m|---- Verificar que el campo 'status' es 'PENDING'?[0m
-20:49:12.346 [Test worker] INFO   - ?[92m|-- Y el header "Content-Type" debe ser "application/json"?[0m
-20:49:12.348 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Finalizando escenario ---
-20:49:12.357 [Test worker] INFO   - ?[92m
+14:41:51.325 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Preparando escenario ---
+14:41:51.350 [Test worker] INFO   - ?[92m|-- Dado que el catálogo de productos contiene al menos un producto activo con id 1?[0m
+14:41:52.151 [Test worker] INFO   - ?[92m|---- Verificar que el producto 1 existe y está activo?[0m
+14:41:52.164 [Test worker] INFO  c.r.qa.actions.ProductActions - Verificando producto con ID: 1
+14:42:06.381 [Test worker] WARN  c.r.qa.actions.ProductActions - Producto 1 no encontrado (status: 500)
+14:42:06.391 [Test worker] INFO   - ?[92m|-- Y que la mesa 5 se encuentra disponible?[0m
+14:42:06.739 [Test worker] INFO   - ?[92m|-- Dado que el payload de la orden es válido con tableId 5 y productId 1 con quantity 2?[0m
+14:42:06.746 [Test worker] INFO   - ?[92m|-- Cuando se envía una solicitud POST a "/orders"?[0m
+14:42:06.753 [Test worker] INFO   - ?[92m|---- Crear nueva orden con payload: OrderRequest(tableId=5, items=[OrderItem(productId=1, quantity=2), OrderItem(productId=1, quantity=2)])?[0m
+14:42:06.756 [Test worker] INFO  c.restaurant.qa.actions.OrderActions - Creando orden para mesa 5
+14:42:18.586 [Test worker] INFO  c.restaurant.qa.actions.OrderActions - Respuesta recibida con código: 201
+14:42:18.588 [Test worker] INFO   - ?[92m|-- Entonces la respuesta debe tener código 201?[0m
+14:42:18.594 [Test worker] INFO   - ?[92m|---- Verificar que el código de respuesta es 201?[0m
+14:42:18.603 [Test worker] INFO  c.r.qa.actions.ValidationActions - Verificando código de respuesta: esperado=201, actual=201
+14:42:18.606 [Test worker] INFO   - ?[92m|-- Y debe incluir el header "Location" con el patrón "/orders/{uuid}"?[0m
+14:42:18.614 [Test worker] INFO   - ?[92m|---- Verificar que el header Location coincide con el patrón '/orders/{uuid}'?[0m
+14:42:18.635 [Test worker] INFO   - ?[92m|-- Y el campo "status" debe ser "PENDING"?[0m
+14:42:18.639 [Test worker] INFO   - ?[92m|---- Verificar que el campo 'status' es 'PENDING'?[0m
+14:42:21.240 [Test worker] INFO   - ?[92m|-- Y el header "Content-Type" debe ser "application/json"?[0m
+14:42:21.252 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Finalizando escenario ---
+14:42:21.269 [Test worker] INFO   - ?[92m
   _____   ___   ___   _____     ___     _     ___   ___   ___   ___  
  |_   _| | __| / __| |_   _|   | _ \   /_\   / __| / __| | __| |   \ 
    | |   | _|  \__ \   | |     |  _/  / _ \  \__ \ \__ \ | _|  | |) |
@@ -59,7 +59,7 @@ Crear una orden exitosamente retorna 201 con Location(creación-de-recursos-con-
 
 Crear una orden exitosamente retorna 201 con Location
 ----------------------------------------------------------------------?[0m
-20:49:12.425 [Test worker] INFO   - 
+14:42:21.455 [Test worker] INFO   - 
   _____   ___   ___   _____     ___   _____     _     ___   _____   ___   ___  
  |_   _| | __| / __| |_   _|   / __| |_   _|   /_\   | _ \ |_   _| | __| |   \ 
    | |   | _|  \__ \   | |     \__ \   | |    / _ \  |   /   | |   | _|  | |) |
@@ -67,28 +67,28 @@ Crear una orden exitosamente retorna 201 con Location
 
 La URL del header Location es accesible(creación-de-recursos-con-semántica-http-correcta;la-url-del-header-location-es-accesible)
 --------------------------------------------------------------------------------
-20:49:12.431 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Preparando escenario ---
-20:49:12.432 [Test worker] INFO   - ?[92m|-- Dado que el catálogo de productos contiene al menos un producto activo con id 1?[0m
-20:49:12.448 [Test worker] INFO   - ?[92m|---- Verificar que el producto 1 existe y está activo?[0m
-20:49:12.450 [Test worker] INFO  c.r.qa.actions.ProductActions - Verificando producto con ID: 1
-20:49:12.505 [Test worker] WARN  c.r.qa.actions.ProductActions - Producto 1 no encontrado (status: 500)
-20:49:12.507 [Test worker] INFO   - ?[92m|-- Y que la mesa 5 se encuentra disponible?[0m
-20:49:12.513 [Test worker] INFO   - ?[92m|-- Dado que se creó una orden exitosamente vía POST a "/orders"?[0m
-20:49:12.517 [Test worker] INFO   - ?[92m|---- Crear nueva orden con payload: OrderRequest(tableId=5, items=[OrderItem(productId=1, quantity=2), OrderItem(productId=1, quantity=2)])?[0m
-20:49:12.522 [Test worker] INFO  c.restaurant.qa.actions.OrderActions - Creando orden para mesa 5
-20:49:12.723 [Test worker] INFO  c.restaurant.qa.actions.OrderActions - Respuesta recibida con código: 201
-20:49:12.727 [Test worker] INFO   - ?[92m|---- Verificar que el código de respuesta es 201?[0m
-20:49:12.731 [Test worker] INFO  c.r.qa.actions.ValidationActions - Verificando código de respuesta: esperado=201, actual=201
-20:49:13.214 [Test worker] INFO   - ?[92m|-- Cuando se envía una solicitud GET a la URL del header "Location"?[0m
-20:49:13.226 [Test worker] INFO   - ?[92m|---- Verificar que el header Location existe?[0m
-20:49:13.281 [Test worker] INFO   - ?[92m|---- Obtener recurso desde URL: http://localhost:8080/orders/c9dfec8d-d327-420e-9027-31857342aec5?[0m
-20:49:13.284 [Test worker] INFO  c.restaurant.qa.actions.OrderActions - Obteniendo recurso desde URL: http://localhost:8080/orders/c9dfec8d-d327-420e-9027-31857342aec5
-20:49:13.646 [Test worker] INFO   - ?[92m|-- Entonces la respuesta debe tener código 200?[0m
-20:49:13.657 [Test worker] INFO   - ?[92m|---- Verificar que el código de respuesta es 200?[0m
-20:49:13.660 [Test worker] INFO  c.r.qa.actions.ValidationActions - Verificando código de respuesta: esperado=200, actual=200
-20:49:13.662 [Test worker] INFO   - ?[92m|-- Y el cuerpo debe contener la misma orden creada previamente?[0m
-20:49:13.704 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Finalizando escenario ---
-20:49:13.706 [Test worker] INFO   - ?[92m
+14:42:21.468 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Preparando escenario ---
+14:42:21.473 [Test worker] INFO   - ?[92m|-- Dado que el catálogo de productos contiene al menos un producto activo con id 1?[0m
+14:42:21.522 [Test worker] INFO   - ?[92m|---- Verificar que el producto 1 existe y está activo?[0m
+14:42:21.523 [Test worker] INFO  c.r.qa.actions.ProductActions - Verificando producto con ID: 1
+14:42:21.866 [Test worker] WARN  c.r.qa.actions.ProductActions - Producto 1 no encontrado (status: 500)
+14:42:21.870 [Test worker] INFO   - ?[92m|-- Y que la mesa 5 se encuentra disponible?[0m
+14:42:21.873 [Test worker] INFO   - ?[92m|-- Dado que se creó una orden exitosamente vía POST a "/orders"?[0m
+14:42:21.877 [Test worker] INFO   - ?[92m|---- Crear nueva orden con payload: OrderRequest(tableId=5, items=[OrderItem(productId=1, quantity=2), OrderItem(productId=1, quantity=2)])?[0m
+14:42:21.880 [Test worker] INFO  c.restaurant.qa.actions.OrderActions - Creando orden para mesa 5
+14:42:22.181 [Test worker] INFO  c.restaurant.qa.actions.OrderActions - Respuesta recibida con código: 201
+14:42:22.185 [Test worker] INFO   - ?[92m|---- Verificar que el código de respuesta es 201?[0m
+14:42:22.188 [Test worker] INFO  c.r.qa.actions.ValidationActions - Verificando código de respuesta: esperado=201, actual=201
+14:42:22.521 [Test worker] INFO   - ?[92m|-- Cuando se envía una solicitud GET a la URL del header "Location"?[0m
+14:42:22.525 [Test worker] INFO   - ?[92m|---- Verificar que el header Location existe?[0m
+14:42:22.538 [Test worker] INFO   - ?[92m|---- Obtener recurso desde URL: http://localhost:8080/orders/b61733c0-6f7f-4870-aa84-a0ae9175f575?[0m
+14:42:22.551 [Test worker] INFO  c.restaurant.qa.actions.OrderActions - Obteniendo recurso desde URL: http://localhost:8080/orders/b61733c0-6f7f-4870-aa84-a0ae9175f575
+14:42:27.061 [Test worker] INFO   - ?[92m|-- Entonces la respuesta debe tener código 200?[0m
+14:42:27.065 [Test worker] INFO   - ?[92m|---- Verificar que el código de respuesta es 200?[0m
+14:42:27.070 [Test worker] INFO  c.r.qa.actions.ValidationActions - Verificando código de respuesta: esperado=200, actual=200
+14:42:27.074 [Test worker] INFO   - ?[92m|-- Y el cuerpo debe contener la misma orden creada previamente?[0m
+14:42:27.117 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Finalizando escenario ---
+14:42:27.126 [Test worker] INFO   - ?[92m
   _____   ___   ___   _____     ___     _     ___   ___   ___   ___  
  |_   _| | __| / __| |_   _|   | _ \   /_\   / __| / __| | __| |   \ 
    | |   | _|  \__ \   | |     |  _/  / _ \  \__ \ \__ \ | _|  | |) |
@@ -96,7 +96,7 @@ La URL del header Location es accesible(creación-de-recursos-con-semántica-htt
 
 La URL del header Location es accesible
 ----------------------------------------------------------------------?[0m
-20:49:13.784 [Test worker] INFO   - 
+14:42:27.276 [Test worker] INFO   - 
   _____   ___   ___   _____     ___   _____     _     ___   _____   ___   ___  
  |_   _| | __| / __| |_   _|   / __| |_   _|   /_\   | _ \ |_   _| | __| |   \ 
    | |   | _|  \__ \   | |     \__ \   | |    / _ \  |   /   | |   | _|  | |) |
@@ -104,25 +104,25 @@ La URL del header Location es accesible
 
 Creación fallida no incluye header Location(creación-de-recursos-con-semántica-http-correcta;creación-fallida-no-incluye-header-location)
 --------------------------------------------------------------------------------
-20:49:13.801 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Preparando escenario ---
-20:49:13.803 [Test worker] INFO   - ?[92m|-- Dado que el catálogo de productos contiene al menos un producto activo con id 1?[0m
-20:49:13.827 [Test worker] INFO   - ?[92m|---- Verificar que el producto 1 existe y está activo?[0m
-20:49:13.828 [Test worker] INFO  c.r.qa.actions.ProductActions - Verificando producto con ID: 1
-20:49:13.931 [Test worker] WARN  c.r.qa.actions.ProductActions - Producto 1 no encontrado (status: 500)
-20:49:13.935 [Test worker] INFO   - ?[92m|-- Y que la mesa 5 se encuentra disponible?[0m
-20:49:13.938 [Test worker] INFO   - ?[92m|-- Dado que el payload contiene un tableId inválido de 0?[0m
-20:49:13.942 [Test worker] INFO   - ?[92m|-- Cuando se envía una solicitud POST a "/orders"?[0m
-20:49:13.945 [Test worker] INFO   - ?[92m|---- Crear nueva orden con payload: OrderRequest(tableId=0, items=[OrderItem(productId=1, quantity=1)])?[0m
-20:49:13.947 [Test worker] INFO  c.restaurant.qa.actions.OrderActions - Creando orden para mesa 0
-20:49:14.068 [Test worker] INFO  c.restaurant.qa.actions.OrderActions - Respuesta recibida con código: 400
-20:49:14.070 [Test worker] INFO   - ?[92m|-- Entonces la respuesta debe tener código 400?[0m
-20:49:14.072 [Test worker] INFO   - ?[92m|---- Verificar que el código de respuesta es 400?[0m
-20:49:14.075 [Test worker] INFO  c.r.qa.actions.ValidationActions - Verificando código de respuesta: esperado=400, actual=400
-20:49:14.076 [Test worker] INFO   - ?[92m|-- Y no debe incluir el header "Location"?[0m
-20:49:14.079 [Test worker] INFO   - ?[92m|-- Y el cuerpo debe seguir la estructura ErrorResponse?[0m
-20:49:14.085 [Test worker] INFO   - ?[92m|---- Verificar estructura de error estándar?[0m
-20:49:14.126 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Finalizando escenario ---
-20:49:14.128 [Test worker] INFO   - ?[92m
+14:42:27.290 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Preparando escenario ---
+14:42:27.295 [Test worker] INFO   - ?[92m|-- Dado que el catálogo de productos contiene al menos un producto activo con id 1?[0m
+14:42:27.352 [Test worker] INFO   - ?[92m|---- Verificar que el producto 1 existe y está activo?[0m
+14:42:27.355 [Test worker] INFO  c.r.qa.actions.ProductActions - Verificando producto con ID: 1
+14:42:27.538 [Test worker] WARN  c.r.qa.actions.ProductActions - Producto 1 no encontrado (status: 500)
+14:42:27.541 [Test worker] INFO   - ?[92m|-- Y que la mesa 5 se encuentra disponible?[0m
+14:42:27.543 [Test worker] INFO   - ?[92m|-- Dado que el payload contiene un tableId inválido de 0?[0m
+14:42:27.547 [Test worker] INFO   - ?[92m|-- Cuando se envía una solicitud POST a "/orders"?[0m
+14:42:27.551 [Test worker] INFO   - ?[92m|---- Crear nueva orden con payload: OrderRequest(tableId=0, items=[OrderItem(productId=1, quantity=1)])?[0m
+14:42:27.553 [Test worker] INFO  c.restaurant.qa.actions.OrderActions - Creando orden para mesa 0
+14:42:27.861 [Test worker] INFO  c.restaurant.qa.actions.OrderActions - Respuesta recibida con código: 400
+14:42:27.863 [Test worker] INFO   - ?[92m|-- Entonces la respuesta debe tener código 400?[0m
+14:42:27.866 [Test worker] INFO   - ?[92m|---- Verificar que el código de respuesta es 400?[0m
+14:42:27.870 [Test worker] INFO  c.r.qa.actions.ValidationActions - Verificando código de respuesta: esperado=400, actual=400
+14:42:27.874 [Test worker] INFO   - ?[92m|-- Y no debe incluir el header "Location"?[0m
+14:42:27.876 [Test worker] INFO   - ?[92m|-- Y el cuerpo debe seguir la estructura ErrorResponse?[0m
+14:42:27.879 [Test worker] INFO   - ?[92m|---- Verificar estructura de error estándar?[0m
+14:42:27.919 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - --- Finalizando escenario ---
+14:42:27.921 [Test worker] INFO   - ?[92m
   _____   ___   ___   _____     ___     _     ___   ___   ___   ___  
  |_   _| | __| / __| |_   _|   | _ \   /_\   / __| / __| | __| |   \ 
    | |   | _|  \__ \   | |     |  _/  / _ \  \__ \ \__ \ | _|  | |) |
@@ -130,7 +130,7 @@ Creación fallida no incluye header Location(creación-de-recursos-con-semántic
 
 Creación fallida no incluye header Location
 ----------------------------------------------------------------------?[0m
-20:49:14.166 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - === Suite de pruebas finalizada ===
+14:42:28.080 [Test worker] INFO  c.r.qa.stepdefinitions.CucumberHooks - === Suite de pruebas finalizada ===
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
