@@ -10,7 +10,8 @@ Backend del sistema de pedidos, compuesto por tres microservicios Java 17 / Spri
 |-----------|-------------|---------------|
 | **[CONTEXTO_PROYECTO.md](CONTEXTO_PROYECTO.md)** | 📋 Documentación completa del proyecto | Onboarding, referencia técnica completa |
 | **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** | 🚀 Guía rápida de comandos esenciales | Día a día, comandos frecuentes |
-| **[docs/Serenity BDD/guia_serenity_bdd.md](docs/Serenity%20BDD/guia_serenity_bdd.md)** | 🧪 Guía completa de automatización QA | Trabajar con pruebas Serenity |
+| **[docs/Serenity BDD/SerenityBDD_Gradle.md](docs/Serenity%20BDD/SerenityBDD_Gradle.md)** | 🧪 Guía completa Serenity BDD + Gradle (build.gradle, serenity.conf, capas, reportes) | Configurar el framework de pruebas, entender el flujo de ejecución |
+| **[docs/Serenity BDD/Serenity_Layers_Structure.md](docs/Serenity%20BDD/Serenity_Layers_Structure.md)** | 🏛️ Arquitectura por capas del proyecto Serenity (runners, steps, actions, data, config, models) | Onboarding QA, revisiones de arquitectura, presentaciones |
 | **[docs/GUIA_ENDPOINTS_Y_DB.md](docs/GUIA_ENDPOINTS_Y_DB.md)** | 🔌 Referencia API + esquema DB | Integración con APIs, consultas DB |
 
 ---
@@ -492,23 +493,46 @@ gradlew.bat test -Denvironment=staging
 Serenity/
 ├── src/test/
 │   ├── java/com/restaurant/qa/
-│   │   ├── runners/TestRunner.java          # Punto de entrada JUnit 5
-│   │   └── stepdefinitions/
-│   │       └── OrderStepDefinitions.java    # Implementación Gherkin
+│   │   ├── runners/TestRunner.java              # Punto de entrada JUnit 5
+│   │   ├── stepdefinitions/
+│   │   │   ├── OrderStepDefinitions.java        # Implementación Gherkin
+│   │   │   └── CucumberHooks.java               # Hooks de ciclo de vida
+│   │   ├── actions/                             # Lógica de interacción con la API
+│   │   │   ├── OrderActions.java
+│   │   │   ├── ProductActions.java
+│   │   │   └── ValidationActions.java
+│   │   ├── data/
+│   │   │   └── OrderDataBuilder.java            # Builder de datos de prueba
+│   │   ├── config/
+│   │   │   ├── TestConstants.java               # Constantes del dominio
+│   │   │   └── TestEnvironment.java             # URLs y tokens por entorno
+│   │   └── models/                              # DTOs del contrato de la API
+│   │       ├── OrderRequest.java
+│   │       ├── OrderResponse.java
+│   │       ├── OrderItem.java
+│   │       └── ErrorResponse.java
 │   └── resources/
-│       ├── features/                        # Escenarios .feature
-│       └── serenity.conf                    # Configuración
+│       ├── features/                            # Escenarios .feature (Gherkin)
+│       ├── serenity.conf                        # Configuración de entornos y drivers
+│       ├── cucumber.properties                  # Enlace Cucumber ↔ Serenity
+│       └── logback-test.xml                     # Configuración de logging
 └── target/site/serenity/
-    └── index.html                           # Reporte generado
+    └── index.html                               # Reporte HTML generado
 ```
 
 ### Tags implementados
 
-- `@smoke` — Pruebas críticas para ejecución rápida
-- `@regression` — Suite completa de regresión
-- `@HDU-01` — Creación de recursos con semántica HTTP correcta
+| Tag | Propósito | Comando |
+|-----|-----------|---------|
+| `@smoke` | Pruebas críticas para ejecución rápida | `gradlew.bat smoke` |
+| `@regression` | Suite completa (excluye `@wip`) | `gradlew.bat regression` |
+| `@HDU-01` … `@HDU-08` | Trazabilidad por Historia de Usuario | `gradlew.bat hdu -Ptag=HDU-03` |
+| `@wip` | Trabajo en progreso (excluido de CI) | Ignorado automáticamente |
+| `@risk:RSK-T*` | Pruebas clasificadas por riesgo | `-Dcucumber.filter.tags=@risk:RSK-T02` |
 
-**📖 Para más detalles:** Ver [docs/Serenity BDD/guia_serenity_bdd.md](docs/Serenity%20BDD/guia_serenity_bdd.md)
+**📖 Documentación completa:**
+- [SerenityBDD_Gradle.md](docs/Serenity%20BDD/SerenityBDD_Gradle.md) — Guía de configuración: `build.gradle`, `serenity.conf`, flujo de ejecución y mejores prácticas
+- [Serenity_Layers_Structure.md](docs/Serenity%20BDD/Serenity_Layers_Structure.md) — Arquitectura por capas: runners, stepdefinitions, actions, data, config, models
 
 ---
 
@@ -546,5 +570,5 @@ Para preguntas o issues:
 
 ---
 
-**Última actualización:** 3 de marzo de 2026  
-**Versión:** 2.0 (con QA Automation)
+**Última actualización:** 6 de marzo de 2026  
+**Versión:** 2.1 (con documentación Serenity BDD detallada)
