@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: restaurant_db
+    environment:
+      POSTGRES_USER: restaurant_user
+      POSTGRES_PASSWORD: restaurant_pass
+      POSTGRES_DB: restaurant_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U restaurant_user -d restaurant_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # RabbitMQ Message Broker
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: restaurant_rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Order Service
+  order-service:
+    build:
+      context: ../..
+      dockerfile: order-service/Dockerfile
+    container_name: order_service
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/restaurant_db
+      DB_USER: restaurant_user
+      DB_PASS: restaurant_pass
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: guest
+      RABBITMQ_PASS: guest
+      RABBITMQ_EXCHANGE_NAME: restaurant.orders
+      RABBITMQ_ROUTING_KEY_ORDER_PLACED: order.placed
+      SERVER_PORT: 8080
+      KITCHEN_TOKEN_HEADER: X-Kitchen-Token
+      KITCHEN_AUTH_TOKEN: kitchen-secret-token-2024
+      CORS_ALLOWED_ORIGINS: "*"
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  # Kitchen Worker
+  kitchen-worker:
+    build:
+      context: ../..
+      dockerfile: kitchen-worker/Dockerfile
+    container_name: kitchen_worker
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/restaurant_db
+      DB_USER: restaurant_user
+      DB_PASS: restaurant_pass
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: guest
+      RABBITMQ_PASS: guest
+      RABBITMQ_EXCHANGE_NAME: restaurant.orders
+      RABBITMQ_QUEUE_NAME: kitchen.orders
+      RABBITMQ_ROUTING_KEY_ORDER_PLACED: order.placed
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

@@ -1,0 +1,213 @@
+// =============================================================================
+// build.gradle — Serenity BDD + Cucumber + JUnit 5 (Pruebas de API)
+// Proyecto: Sistema de Pedidos de Restaurante — Automatización QA
+// =============================================================================
+
+plugins {
+    id 'java'
+    id 'net.serenity-bdd.serenity-gradle-plugin' version '4.2.12'
+}
+
+// ---------------------------------------------------------------------------
+// Codificación por defecto y nomenclatura
+// ---------------------------------------------------------------------------
+defaultTasks 'clean', 'test', 'aggregate'
+
+// ---------------------------------------------------------------------------
+// Versión de Java — usando Java 17 (compatible con backend services)
+// ---------------------------------------------------------------------------
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+// ---------------------------------------------------------------------------
+// Catálogo de versiones — gestión centralizada de dependencias
+// ---------------------------------------------------------------------------
+ext {
+    serenityVersion       = '4.2.12'
+    cucumberVersion       = '7.20.1'
+    junitVersion          = '5.11.4'
+    restAssuredVersion    = '5.5.0'
+    lombokVersion         = '1.18.38'
+    assertjVersion        = '3.27.3'
+    logbackVersion        = '1.5.16'
+    slf4jVersion          = '2.0.16'
+}
+
+// ---------------------------------------------------------------------------
+// Repositorios
+// ---------------------------------------------------------------------------
+repositories {
+    mavenCentral()
+}
+
+// ---------------------------------------------------------------------------
+// Dependencias
+// ---------------------------------------------------------------------------
+dependencies {
+
+    // ── Serenity BDD Core ──────────────────────────────────────────────────
+    // La librería central proporciona rastreo de pasos, agregación y el
+    // Patrón Screenplay. Este es el corazón de Serenity.
+    implementation "net.serenity-bdd:serenity-core:${serenityVersion}"
+
+    // ── Integración Serenity + Cucumber ────────────────────────────────────
+    // Conecta el parser Gherkin de Cucumber con el motor de reportes
+    // de Serenity. Esto es lo que hace que tus archivos .feature
+    // produzcan reportes HTML enriquecidos.
+    implementation "net.serenity-bdd:serenity-cucumber:${serenityVersion}"
+
+    // ── Serenity + REST Assured ────────────────────────────────────────────
+    // Envuelve REST Assured para que cada llamada HTTP se registre en el
+    // reporte de Serenity. Esencial para pruebas de contrato de API
+    // (tus casos de prueba INT-*).
+    implementation "net.serenity-bdd:serenity-rest-assured:${serenityVersion}"
+
+    // ── Serenity + JUnit 5 ─────────────────────────────────────────────────
+    // Integra Serenity con el motor de plataforma JUnit 5. Reemplaza el
+    // antiguo enfoque @RunWith(CucumberWithSerenity.class) de JUnit 4.
+    implementation "net.serenity-bdd:serenity-junit5:${serenityVersion}"
+
+    // ── Serenity Screenplay (REST) ─────────────────────────────────────────
+    // Proporciona el Patrón Screenplay para interacciones de API REST.
+    // Habilita pruebas basadas en actores: Actor.named("Chef").attemptsTo(...)
+    implementation "net.serenity-bdd:serenity-screenplay:${serenityVersion}"
+    implementation "net.serenity-bdd:serenity-screenplay-rest:${serenityVersion}"
+
+    // ── Dependencias de Cucumber ───────────────────────────────────────────
+    // Framework BDD de Cucumber para analizar archivos .feature y mapear
+    // pasos Gherkin a definiciones de pasos en Java.
+    implementation "io.cucumber:cucumber-java:${cucumberVersion}"
+    implementation "io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}"
+
+    // ── Plataforma JUnit 5 ─────────────────────────────────────────────────
+    // JUnit 5 es el motor de ejecución de pruebas. Serenity se engancha
+    // a él a través del lanzador de plataforma. JUnit 4 NO es requerido.
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    testImplementation "org.junit.platform:junit-platform-suite:1.11.4"
+
+    // ── AssertJ ────────────────────────────────────────────────────────────
+    // Aserciones fluidas para validación legible de pruebas.
+    // Coincide con lo que tus servicios backend ya utilizan.
+    testImplementation "org.assertj:assertj-core:${assertjVersion}"
+
+    // ── Lombok ─────────────────────────────────────────────────────────────
+    // Reduce boilerplate en POJOs (DTOs, models)
+    compileOnly     "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    // ── Logging ────────────────────────────────────────────────────────────
+    // SLF4J + Logback para logging consistente en la ejecución de pruebas.
+    implementation "org.slf4j:slf4j-api:${slf4jVersion}"
+    implementation "ch.qos.logback:logback-classic:${logbackVersion}"
+}
+
+// ---------------------------------------------------------------------------
+// Configuración de encoding UTF-8 (CRÍTICO para archivos .feature en español)
+// ---------------------------------------------------------------------------
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Test) {
+    systemProperty "file.encoding", "UTF-8"
+}
+
+// ---------------------------------------------------------------------------
+// Configuración de pruebas
+// ---------------------------------------------------------------------------
+test {
+    // Usa la Plataforma JUnit 5 (requerido para integración Serenity + Cucumber)
+    useJUnitPlatform()
+
+    // Forzar encoding UTF-8 para archivos .feature en español
+    systemProperty "file.encoding", "UTF-8"
+    jvmArgs '-Dfile.encoding=UTF-8'
+
+    // Pasa propiedades del sistema desde la línea de comandos al JVM de pruebas.
+    // Esto habilita: gradle test -Denvironment=staging
+    systemProperties System.getProperties()
+
+    // Configuración de salida de pruebas
+    testLogging {
+        events "passed", "skipped", "failed"
+        showExceptions true
+        showCauses true
+        showStackTraces true
+        exceptionFormat "full"
+    }
+
+    // Asegurar que las pruebas siempre se ejecuten (no cachear resultados)
+    outputs.upToDateWhen { false }
+
+    // Finalizar generando el reporte agregado
+    finalizedBy 'aggregate'
+}
+
+// ---------------------------------------------------------------------------
+// Reporte agregado de Serenity
+// ---------------------------------------------------------------------------
+serenity {
+    // The serenity plugin 4.x reads configuration from serenity.conf instead
+}
+
+// Workaround for iCloud Drive placeholder files causing snapshot failures
+afterEvaluate {
+    tasks.matching { it.name == 'aggregate' }.configureEach {
+        doNotTrackState("iCloud Drive creates placeholder files that cannot be snapshotted")
+        outputs.upToDateWhen { false }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Tareas personalizadas
+// ---------------------------------------------------------------------------
+
+// Tarea para ejecutar solo pruebas de humo (etiquetadas @smoke en .feature)
+tasks.register('smoke', Test) {
+    useJUnitPlatform()
+    systemProperty 'cucumber.filter.tags', '@smoke'
+    systemProperty "file.encoding", "UTF-8"
+    jvmArgs '-Dfile.encoding=UTF-8'
+    systemProperties System.getProperties()
+    finalizedBy 'aggregate'
+}
+
+// Tarea para ejecutar solo pruebas de regresión
+tasks.register('regression', Test) {
+    useJUnitPlatform()
+    systemProperty 'cucumber.filter.tags', '@regression and not @wip'
+    systemProperty "file.encoding", "UTF-8"
+    jvmArgs '-Dfile.encoding=UTF-8'
+    systemProperties System.getProperties()
+    finalizedBy 'aggregate'
+}
+
+// Tarea para ejecutar pruebas específicas de HDU (ej: gradle hdu -Ptag=HDU-01)
+tasks.register('hdu', Test) {
+    useJUnitPlatform()
+    def tagFilter = project.hasProperty('tag') ? "@${project.property('tag')}" : '@HDU-01'
+    systemProperty 'cucumber.filter.tags', tagFilter
+    systemProperty "file.encoding", "UTF-8"
+    jvmArgs '-Dfile.encoding=UTF-8'
+    systemProperties System.getProperties()
+    finalizedBy 'aggregate'
+}
+
+// ---------------------------------------------------------------------------
+// Configuración de conjuntos de fuentes
+// ---------------------------------------------------------------------------
+sourceSets {
+    test {
+        java {
+            srcDirs = ['src/test/java']
+        }
+        resources {
+            srcDirs = ['src/test/resources']
+        }
+    }
+}

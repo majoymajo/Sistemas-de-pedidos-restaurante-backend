@@ -1,0 +1,19 @@
+FROM maven:3.9-eclipse-temurin-17-alpine
+WORKDIR /app
+
+# Layer 1: Copy only POM files (cached unless POMs change)
+COPY pom.xml .
+COPY order-service/pom.xml order-service/pom.xml
+COPY kitchen-worker/pom.xml kitchen-worker/pom.xml
+COPY report-service/pom.xml report-service/pom.xml
+
+# Layer 2: Download dependencies (cached unless POM changes)
+RUN mvn -pl report-service -am dependency:go-offline -q
+
+# Layer 3: Copy source code (will be overridden by volume mount in dev)
+COPY report-service/src report-service/src
+
+EXPOSE 8082
+
+# Run with spring-boot:run for DevTools hot-reload
+CMD ["mvn", "-pl", "report-service", "spring-boot:run", "-Dspring-boot.run.jvmArguments=-XX:+UseZGC -Xmx512m"]

@@ -1,0 +1,18 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Reducir el ruido de Serenity en consola -->
+    <logger name="net.serenitybdd" level="WARN"/>
+    <logger name="net.thucydides" level="WARN"/>
+
+    <!-- Mostrar logs de tus pruebas -->
+    <logger name="com.restaurant.qa" level="DEBUG"/>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
