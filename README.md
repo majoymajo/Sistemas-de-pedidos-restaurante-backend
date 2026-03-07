@@ -412,6 +412,10 @@ Sistemas-de-pedidos-restaurante-backend/
 │   └── pom.xml
 ├── lombok.config                # Genera @Generated para exclusion JaCoCo
 ├── pom.xml                      # POM padre multi-modulo
+├── Taller Semana 4/             # Artefactos de análisis y refinamiento (Semana 4)
+│   ├── TEST_CASES_AI.md         # Casos de prueba generados con IA (Gema B)
+│   ├── TEST_CASES_REFINED.md    # Casos de prueba ajustados por el tester humano
+│   └── USER_STORIES_REFINEMENT.md # Refinamiento de historias de usuario
 └── .github/workflows/
     └── ci-cd.yml                # Pipeline CI/CD
 ```
@@ -543,6 +547,14 @@ Serenity/
 - **[docs/HANDOVER_REPORT.md](docs/HANDOVER_REPORT.md)** — Reporte de handover del proyecto
 - **[docs/week-3-review/ARCHITECTURE.md](docs/week-3-review/ARCHITECTURE.md)** — Decisiones arquitectónicas
 - **[docs/TEST_PLAN.md](docs/TEST_PLAN.md)** — Plan de pruebas completo
+
+### 📂 Taller Semana 4 — Análisis y Refinamiento QA
+
+| Documento | Descripción |
+|-----------|-------------|
+| **[Taller Semana 4/TEST_CASES_AI.md](Taller%20Semana%204/TEST_CASES_AI.md)** | Casos de prueba generados con IA por Gema B (cobertura completa HDU-01 a HDU-08) |
+| **[Taller Semana 4/TEST_CASES_REFINED.md](Taller%20Semana%204/TEST_CASES_REFINED.md)** | Casos de prueba ajustados por el tester humano con rationale de negocio |
+| **[Taller Semana 4/USER_STORIES_REFINEMENT.md](Taller%20Semana%204/USER_STORIES_REFINEMENT.md)** | Refinamiento de historias de usuario — criterios de aceptación ajustados |
 
 ---
 
