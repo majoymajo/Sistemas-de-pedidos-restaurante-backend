@@ -412,6 +412,10 @@ Sistemas-de-pedidos-restaurante-backend/
 │   └── pom.xml
 ├── lombok.config                # Genera @Generated para exclusion JaCoCo
 ├── pom.xml                      # POM padre multi-modulo
+├── Taller Semana 4/             # Artefactos de análisis y refinamiento (Semana 4)
+│   ├── TEST_CASES_AI.md         # Casos de prueba generados con IA (Gema B)
+│   ├── TEST_CASES_REFINED.md    # Casos de prueba ajustados por el tester humano
+│   └── USER_STORIES_REFINEMENT.md # Refinamiento de historias de usuario
 └── .github/workflows/
     └── ci-cd.yml                # Pipeline CI/CD
 ```
@@ -544,29 +548,17 @@ Serenity/
 - **[docs/week-3-review/ARCHITECTURE.md](docs/week-3-review/ARCHITECTURE.md)** — Decisiones arquitectónicas
 - **[docs/TEST_PLAN.md](docs/TEST_PLAN.md)** — Plan de pruebas completo
 
----
+### 📂 Taller Semana 4 — Análisis y Refinamiento QA
 
-## 🤝 Contribuir
-
-Este es un proyecto **brownfield** recibido como handover. Por favor revisa las **[instrucciones de Copilot](.github/copilot-instructions.md)** antes de hacer cambios.
-
-### Reglas críticas
-- ❌ NO romper funcionalidad existente
-- ❌ NO cambiar contratos REST/AMQP sin documentar
-- ❌ NO hacer llamadas REST entre servicios backend
-- ✅ SÍ escribir tests antes de código (TDD)
-- ✅ SÍ refactorizar para mejorar seguridad
-- ✅ SÍ documentar decisiones técnicas
+| Documento | Descripción |
+|-----------|-------------|
+| **[Taller Semana 4/TEST_CASES_AI.md](Taller%20Semana%204/TEST_CASES_AI.md)** | Casos de prueba generados con IA por Gema B (cobertura completa HDU-01 a HDU-08) |
+| **[Taller Semana 4/TEST_CASES_REFINED.md](Taller%20Semana%204/TEST_CASES_REFINED.md)** | Casos de prueba ajustados por el tester humano con rationale de negocio |
+| **[Taller Semana 4/USER_STORIES_REFINEMENT.md](Taller%20Semana%204/USER_STORIES_REFINEMENT.md)** | Refinamiento de historias de usuario — criterios de aceptación ajustados |
 
 ---
 
-## 📞 Soporte
-
-Para preguntas o issues:
-1. Revisa primero [CONTEXTO_PROYECTO.md](CONTEXTO_PROYECTO.md)
-2. Consulta [QUICK_REFERENCE.md](QUICK_REFERENCE.md) para comandos
-3. Busca en la documentación de `docs/`
-4. Abre un issue en GitHub
+ Abre un issue en GitHub
 
 ---
 
