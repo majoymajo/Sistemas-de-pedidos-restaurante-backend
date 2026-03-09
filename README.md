@@ -571,9 +571,9 @@ Serenity/
 
 | Documento | Descripción |
 |-----------|-------------|
-| **[Taller Semana 4/BUSINESS_CONTEXT.md](Taller%20Semana%204/BUSINESS_CONTEXT.md)** | Contexto de negocio del sistema de pedidos |
-| **[Taller Semana 4/TEST_CASES_AI.md](Taller%20Semana%204/TEST_CASES_AI.md)** | Casos de prueba generados con IA (Gema B) — cobertura HDU-01 a HDU-08 |
-| **[Taller Semana 4/USER_STORIES_REFINEMENT.md](Taller%20Semana%204/USER_STORIES_REFINEMENT.md)** | Refinamiento de historias de usuario — criterios de aceptación ajustados |
+| **[Taller Semana 4/BUSINESS_CONTEXT.md](BUSINESS_CONTEXT.md)** | Contexto de negocio del sistema de pedidos |
+| **[Taller Semana 4/TEST_CASES_AI.md](TEST_CASES_AI.md)** | Casos de prueba generados con IA (Gema B) — cobertura HDU-01 a HDU-08 |
+| **[Taller Semana 4/USER_STORIES_REFINEMENT.md](USER_STORIES_REFINEMENT.md)** | Refinamiento de historias de usuario — criterios de aceptación ajustados |
 | **[Taller Semana 4/G7-Serenity BDD.pptx](Taller%20Semana%204/G7-Serenity%20BDD.pptx)** | Presentación del framework Serenity BDD (Grupo 7) |
 
 ---
